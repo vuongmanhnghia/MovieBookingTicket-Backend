@@ -8,6 +8,7 @@ let initWebRoutes = (app) => {
 	router.get("/about", homeController.getAboutPage);
 	router.get("/signin", homeController.getSignin);
 	router.post("/post-signin", homeController.postSignin);
+	router.get("/get-crud", homeController.displayGetCRUD);
 
 	return app.use("/", router);
 };

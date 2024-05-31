@@ -26,9 +26,21 @@ let postSignin = async (req, res) => {
 	return res.send("Post Signin");
 };
 
+let displayGetCRUD = async (req, res) => {
+	let data = await SigninService.getAllUser();
+	console.log("--------------------------------------------");
+	console.log(data);
+	console.log("--------------------------------------------");
+
+	return res.render("displayCRUD.ejs", {
+		data: data,
+	});
+};
+
 module.exports = {
 	getHomePage: getHomePage,
 	getAboutPage: getAboutPage,
 	getSignin: getSignin,
 	postSignin: postSignin,
+	displayGetCRUD: displayGetCRUD,
 };
