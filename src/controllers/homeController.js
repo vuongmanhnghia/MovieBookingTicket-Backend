@@ -1,4 +1,5 @@
 import db from "../models/index";
+import SigninService from "../services/SigninService";
 
 let getHomePage = async (req, res) => {
 	try {
@@ -19,8 +20,15 @@ let getSignin = (req, res) => {
 	return res.render("signin.ejs");
 };
 
+let postSignin = async (req, res) => {
+	// let message = await SigninService.createNewUser(req.body);
+	// console.log(message);
+	return res.send("Post Signin");
+};
+
 module.exports = {
 	getHomePage: getHomePage,
 	getAboutPage: getAboutPage,
 	getSignin: getSignin,
+	postSignin: postSignin,
 };
