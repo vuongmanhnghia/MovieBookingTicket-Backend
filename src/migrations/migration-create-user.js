@@ -33,11 +33,11 @@ module.exports = {
 				allowNull: false,
 				type: Sequelize.BOOLEAN,
 			},
-			typeRole: {
+			image: {
 				allowNull: false,
 				type: Sequelize.STRING,
 			},
-			keyRole: {
+			roleId: {
 				allowNull: false,
 				type: Sequelize.STRING,
 			},

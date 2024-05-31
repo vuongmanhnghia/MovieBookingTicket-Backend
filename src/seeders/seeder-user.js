@@ -6,7 +6,6 @@ module.exports = {
 			{
 				email: "vuongmanhnghia@gmail.com",
 				password: "Vmn.2005",
-				firstName: "John",
 				fullName: "Vuong Manh Nghia",
 				phoneNumber: "0375992059",
 				address: "Hanoi",
