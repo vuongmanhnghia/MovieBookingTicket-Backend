@@ -28,19 +28,39 @@ let postSignin = async (req, res) => {
 
 let displayGetCRUD = async (req, res) => {
 	let data = await SigninService.getAllUser();
-	console.log("--------------------------------------------");
-	console.log(data);
-	console.log("--------------------------------------------");
-
 	return res.render("displayCRUD.ejs", {
 		data: data,
 	});
 };
 
+let getUpdateCRUD = async (req, res) => {
+	let userId = req.query.id;
+	if (userId) {
+		let userDate = await SigninService.getUserInfoById(userId);
+		// check userId not found in DB
+		console.log(userDate);
+		// let userDate
+		return res.render("updateCRUD.ejs", {
+			user: userDate,
+		});
+	} else {
+		return res.send("User not found");
+	}
+};
+
+let putCRUD = async (req, res) => {
+	let data = req.body;
+	let allUsers = await SigninService.updateUserData(data);
+	return res.render("displayCRUD.ejs", {
+		data: allUsers,
+	});
+};
 module.exports = {
 	getHomePage: getHomePage,
 	getAboutPage: getAboutPage,
 	getSignin: getSignin,
 	postSignin: postSignin,
 	displayGetCRUD: displayGetCRUD,
+	getUpdateCRUD: getUpdateCRUD,
+	putCRUD: putCRUD,
 };

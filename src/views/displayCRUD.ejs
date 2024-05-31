@@ -12,28 +12,56 @@
 			border: 1px solid black;
 			border-collapse: collapse;
 		}
+
+		.btn-edit {
+			background-color: orange;
+			border: none;
+			border-radius: 5px;
+			outline: none;
+			height: 24px;
+			width: 60px;
+			margin: 5px;
+			cursor: pointer;
+		}
+
+		.btn-delete {
+			background-color: rgb(157, 38, 38);
+			border: none;
+			border-radius: 5px;
+			outline: none;
+			height: 24px;
+			width: 60px;
+			margin: 5px;
+			cursor: pointer;
+		}
 	</style>
 	<body>
 		<table style="width: 100%">
 			<tr>
 				<th>Mail</th>
-				<th>Password</th>
 				<th>Full name</th>
 				<th>Phone number</th>
-				<th>Date of birth</th>
 				<th>Gender</th>
 				<th>Address</th>
+				<th>Actions</th>
 				<th></th>
 			</tr>
 			<% for (let i = 0; i < data.length; i++) { %>
 			<tr>
 				<td><%= data[i].email %></td>
-				<td><%= data[i].password %></td>
 				<td><%= data[i].fullName %></td>
 				<td><%= data[i].phoneNumber %></td>
-				<td><%= data[i].dateOfBirth %></td>
 				<td><%= data[i].gender %></td>
 				<td><%= data[i].address %></td>
+				<td>
+					<a
+						href="edit-crud?id=<% data[i].id %>"
+						class="btn-edit"
+						type="button"
+						>Edit</a
+					>
+					<a class="btn-delete" type="button">Delete</a>
+				</td>
 			</tr>
 			<% } %>
 		</table>
