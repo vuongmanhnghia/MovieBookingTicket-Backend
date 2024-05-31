@@ -34,7 +34,7 @@ module.exports = {
 				type: Sequelize.BOOLEAN,
 			},
 			image: {
-				allowNull: false,
+				allowNull: true,
 				type: Sequelize.STRING,
 			},
 			roleId: {
