@@ -21,8 +21,8 @@ let getSignin = (req, res) => {
 };
 
 let postSignin = async (req, res) => {
-	// let message = await SigninService.createNewUser(req.body);
-	// console.log(message);
+	let message = await SigninService.createNewUser(req.body);
+	console.log(message);
 	return res.send("Post Signin");
 };
 
