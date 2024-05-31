@@ -25,13 +25,17 @@ module.exports = {
 				allowNull: false,
 				type: Sequelize.STRING,
 			},
-			address: {
+			dateOfBirth: {
 				allowNull: false,
-				type: Sequelize.STRING,
+				type: Sequelize.DATE,
 			},
 			gender: {
 				allowNull: false,
 				type: Sequelize.BOOLEAN,
+			},
+			address: {
+				allowNull: false,
+				type: Sequelize.STRING,
 			},
 			image: {
 				allowNull: true,
