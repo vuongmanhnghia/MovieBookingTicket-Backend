@@ -7,7 +7,7 @@ let handleLogin = async (req, res) => {
 	if (!email || !password) {
 		return res.status(500).json({
 			errCode: 1,
-			messenge: "Email or password is required!",
+			message: "Email or password is required!",
 		});
 	}
 	let userData = await userService.handleUserLogin(email, password);
