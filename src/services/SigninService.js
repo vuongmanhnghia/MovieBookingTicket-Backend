@@ -1,6 +1,6 @@
 import bcrypt from "bcryptjs";
 import db from "../models/index";
-import { raw } from "body-parser";
+// import { raw } from "body-parser";
 
 const salt = bcrypt.genSaltSync(10);
 
