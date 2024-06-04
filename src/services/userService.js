@@ -154,9 +154,47 @@ let deleteUser = (userId) => {
 	});
 };
 
+let updateUserData = (data) => {
+	return new Promise(async (resolve, reject) => {
+		try {
+			if (!data.id) {
+				resolve({
+					errCode: 2,
+					errMessage: "Missing required parameters",
+				});
+			}
+			let user = await db.User.findOne({
+				where: { id: data.id },
+				raw: false,
+			});
+			if (user) {
+				user.fullName = data.fullName;
+				user.phoneNumber = data.phoneNumber;
+				user.address = data.address;
+				user.gender = data.gender === "1" ? true : false;
+
+				await user.save();
+				// await db.User.save({});
+				resolve({
+					errCode: 0,
+					message: "Update user success!",
+				});
+			} else {
+				resolve({
+					errCode: 1,
+					errMessage: "User's not found!",
+				});
+			}
+		} catch (e) {
+			reject(e);
+		}
+	});
+};
+
 module.exports = {
 	handleUserLogin: handleUserLogin,
 	getAllUsers: getAllUsers,
 	createNewUser: createNewUser,
 	deleteUser: deleteUser,
+	updateUserData: updateUserData,
 };
