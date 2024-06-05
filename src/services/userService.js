@@ -46,7 +46,6 @@ let handleUserLogin = (email, password) => {
 				userData.errCode = 1;
 				userData.errMessage = `User's email isn't exist`;
 			}
-			console.log(userData);
 			resolve(userData);
 		} catch (error) {
 			reject(error);
@@ -90,7 +89,6 @@ let getAllUsers = (userId) => {
 					},
 				});
 			}
-			console.log(users);
 			resolve(users);
 		} catch (error) {
 			reject(error);
