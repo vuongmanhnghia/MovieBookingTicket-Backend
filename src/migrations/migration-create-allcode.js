@@ -1,28 +1,25 @@
 "use strict";
 module.exports = {
 	up: async (queryInterface, Sequelize) => {
-		await queryInterface.createTable("Showtimes", {
+		await queryInterface.createTable("Allcodes", {
 			id: {
 				allowNull: false,
 				autoIncrement: true,
 				primaryKey: true,
 				type: Sequelize.INTEGER,
 			},
-			movieId: {
+			key: {
 				allowNull: false,
-				type: Sequelize.INTEGER,
+				type: Sequelize.STRING,
+				unique: true,
 			},
-			screenId: {
+			type: {
 				allowNull: false,
-				type: Sequelize.INTEGER,
+				type: Sequelize.STRING,
 			},
-			startTime: {
+			value: {
 				allowNull: false,
-				type: Sequelize.DATE,
-			},
-			endTime: {
-				allowNull: false,
-				type: Sequelize.DATE,
+				type: Sequelize.STRING,
 			},
 			createdAt: {
 				allowNull: false,
@@ -35,6 +32,6 @@ module.exports = {
 		});
 	},
 	down: async (queryInterface, Sequelize) => {
-		await queryInterface.dropTable("Showtimes");
+		await queryInterface.dropTable("Allcodes");
 	},
 };
