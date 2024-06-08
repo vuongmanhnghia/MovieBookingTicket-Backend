@@ -31,7 +31,7 @@ module.exports = {
 			},
 			gender: {
 				allowNull: false,
-				type: Sequelize.BOOLEAN,
+				type: Sequelize.STRING,
 			},
 			address: {
 				allowNull: false,
