@@ -118,6 +118,7 @@ let createNewUser = (data) => {
 					dateOfBirth: data.dateOfBirth,
 					gender: data.gender,
 					address: data.address,
+					image: data.image,
 					roleId: data.roleId,
 				});
 				resolve({
@@ -174,6 +175,7 @@ let updateUserData = (data) => {
 				user.gender = data.gender;
 				user.address = data.address;
 				user.roleId = data.roleId;
+				// user.image = data.image;
 
 				await user.save();
 				// await db.User.save({});
