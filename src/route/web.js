@@ -1,6 +1,7 @@
 import express from "express";
 import homeController from "../controllers/homeController";
 import userController from "../controllers/userController";
+import movieController from "../controllers/movieController";
 
 let router = express.Router();
 
@@ -19,6 +20,7 @@ let initWebRoutes = (app) => {
 	router.post("/api/create-new-user", userController.handleCreateNewUser);
 	router.put("/api/edit-user", userController.handleEditUser);
 	router.delete("/api/delete-user", userController.handleDeleteUser);
+	router.get("/api/get-movie-home", movieController.getTopMoviesHome);
 
 	router.get("/api/allcode", userController.getAllCode);
 

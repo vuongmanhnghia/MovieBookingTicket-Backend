@@ -175,7 +175,9 @@ let updateUserData = (data) => {
 				user.gender = data.gender;
 				user.address = data.address;
 				user.roleId = data.roleId;
-				// user.image = data.image;
+				if (data.image) {
+					user.image = data.image;
+				}
 
 				await user.save();
 				// await db.User.save({});
