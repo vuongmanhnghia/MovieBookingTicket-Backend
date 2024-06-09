@@ -170,8 +170,10 @@ let updateUserData = (data) => {
 			if (user) {
 				user.fullName = data.fullName;
 				user.phoneNumber = data.phoneNumber;
+				user.dateOfBirth = data.dateOfBirth;
+				user.gender = data.gender;
 				user.address = data.address;
-				user.gender = data.gender === "1" ? true : false;
+				user.roleId = data.roleId;
 
 				await user.save();
 				// await db.User.save({});
