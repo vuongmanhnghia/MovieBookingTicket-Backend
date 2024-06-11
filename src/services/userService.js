@@ -33,7 +33,7 @@ let handleUserLogin = (email, password) => {
 					if (check) {
 						delete user.password;
 						userData.errCode = 0;
-						userData.errMessage = `Ok`;
+						userData.errMessage = `Login success`;
 						userData.user = user;
 					} else {
 						userData.errCode = 3;
