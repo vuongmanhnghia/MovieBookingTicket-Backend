@@ -47,9 +47,31 @@ let handleGetAllMovies = async (req, res) => {
 	}
 };
 
+let handleGetDetailMovie = async (req, res) => {
+	try {
+		let movieId = req.query.id;
+		if (!movieId) {
+			return res.status(200).json({
+				errCode: 3,
+				errMessage: "Missing parameter",
+			});
+		}
+
+		let response = await movieService.getMovieDetail(movieId);
+		return res.status(200).json(response);
+	} catch (e) {
+		console.log(e);
+		return res.status(200).json({
+			errCode: -1,
+			errMessage: "Error from server",
+		});
+	}
+};
+
 module.exports = {
 	handleCreateNewMovie: handleCreateNewMovie,
 	handleDeleteMovie: handleDeleteMovie,
 	handleGetTopMovies: handleGetTopMovies,
 	handleGetAllMovies: handleGetAllMovies,
+	handleGetDetailMovie: handleGetDetailMovie,
 };

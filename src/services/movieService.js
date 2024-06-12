@@ -122,9 +122,38 @@ let getAllMovies = () => {
 	});
 };
 
+let getMovieDetail = (id) => {
+	return new Promise(async (resolve, reject) => {
+		if (!id) {
+			resolve({
+				errCode: 1,
+				errMessage: "Missing required parameter!",
+			});
+		}
+		try {
+			let data = await db.Movie.findOne({
+				where: { id: id },
+			});
+			if (!data) {
+				resolve({
+					errCode: 2,
+					errMessage: "Movie not found!",
+				});
+			}
+			resolve({
+				errCode: 0,
+				data: data,
+			});
+		} catch (e) {
+			reject(e);
+		}
+	});
+};
+
 module.exports = {
 	createNewMovie: createNewMovie,
 	deleteMovie: deleteMovie,
 	getTopMovies: getTopMovies,
 	getAllMovies: getAllMovies,
+	getMovieDetail: getMovieDetail,
 };
