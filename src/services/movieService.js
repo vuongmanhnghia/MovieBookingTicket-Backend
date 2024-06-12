@@ -83,7 +83,6 @@ let getTopMovies = (limit) => {
 				order: [["createdAt", "DESC"]],
 				// raw: true;
 			});
-			console.log(movies);
 			resolve({
 				errCode: 0,
 				data: movies,
@@ -109,8 +108,23 @@ let getTopMovies = (limit) => {
 	// });
 };
 
+let getAllMovies = () => {
+	return new Promise(async (resolve, reject) => {
+		try {
+			let movies = await db.Movie.findAll({});
+			resolve({
+				errCode: 0,
+				data: movies,
+			});
+		} catch (e) {
+			reject(e);
+		}
+	});
+};
+
 module.exports = {
 	createNewMovie: createNewMovie,
 	deleteMovie: deleteMovie,
 	getTopMovies: getTopMovies,
+	getAllMovies: getAllMovies,
 };

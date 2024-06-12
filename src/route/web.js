@@ -17,7 +17,9 @@ let initWebRoutes = (app) => {
 	router.delete("/api/delete-movie", movieController.handleDeleteMovie);
 
 	router.get("/api/allcode", userController.getAllCode);
+
 	router.get("/api/get-top-movies", movieController.handleGetTopMovies);
+	router.get("/api/get-all-movies", movieController.handleGetAllMovies);
 	return app.use("/", router);
 };
 

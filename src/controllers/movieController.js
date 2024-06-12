@@ -34,8 +34,22 @@ let handleGetTopMovies = async (req, res) => {
 	}
 };
 
+let handleGetAllMovies = async (req, res) => {
+	try {
+		let response = await movieService.getAllMovies();
+		return res.status(200).json(response);
+	} catch (e) {
+		console.log(e);
+		return res.status(200).json({
+			errCode: -1,
+			errMessage: "Error from server",
+		});
+	}
+};
+
 module.exports = {
 	handleCreateNewMovie: handleCreateNewMovie,
 	handleDeleteMovie: handleDeleteMovie,
 	handleGetTopMovies: handleGetTopMovies,
+	handleGetAllMovies: handleGetAllMovies,
 };

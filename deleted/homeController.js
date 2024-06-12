@@ -38,7 +38,6 @@ let getUpdateCRUD = async (req, res) => {
 	if (userId) {
 		let userDate = await SigninService.getUserInfoById(userId);
 		// check userId not found in DB
-		console.log(userDate);
 		// let userDate
 		return res.render("updateCRUD.ejs", {
 			user: userDate,
