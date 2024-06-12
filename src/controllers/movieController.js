@@ -23,7 +23,7 @@ let handleGetTopMovies = async (req, res) => {
 		limit = 10;
 	}
 	try {
-		let response = await movieService.getTopMovies(limit);
+		let response = await movieService.getTopMovies(+limit);
 		return res.status(200).json(response);
 	} catch (e) {
 		console.log(e);

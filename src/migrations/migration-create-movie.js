@@ -24,7 +24,7 @@ module.exports = {
 				allowNull: false,
 				type: Sequelize.INTEGER,
 			},
-			release_date: {
+			releaseDate: {
 				allowNull: false,
 				type: Sequelize.DATE,
 			},

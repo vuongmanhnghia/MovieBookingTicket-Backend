@@ -35,9 +35,9 @@ let createNewMovie = (data) => {
 					description: data.description,
 					genre: data.genre,
 					duration: data.duration,
-					release_date: data.release_date,
+					releaseDate: data.releaseDate,
 					rating: data.rating,
-					direction: data.direction,
+					director: data.director,
 					image: data.image,
 				});
 				resolve({
