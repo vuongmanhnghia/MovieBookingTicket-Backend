@@ -33,6 +33,36 @@ let createNewScreen = (data) => {
 	});
 };
 
+let getScreenDetail = (id) => {
+	return new Promise(async (resolve, reject) => {
+		if (!id) {
+			resolve({
+				errCode: 1,
+				errMessage: "Missing required parameter!",
+			});
+		}
+		try {
+			let data = await db.Screen.findAll({
+				where: { id: id },
+				raw: true,
+			});
+
+			resolve({
+				errCode: 2,
+				errMessage: "Screen not found!",
+			});
+
+			resolve({
+				errCode: 0,
+				data: data,
+			});
+		} catch (e) {
+			reject(e);
+		}
+	});
+};
+
 module.exports = {
 	createNewScreen: createNewScreen,
+	getScreenDetail: getScreenDetail,
 };

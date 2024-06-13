@@ -36,6 +36,7 @@ let initWebRoutes = (app) => {
 		"/api/create-new-screen",
 		screenController.handleCreateNewScreen
 	);
+	router.get("/api/get-detail-screen", screenController.handleGetDetailScreen);
 
 	return app.use("/", router);
 };
