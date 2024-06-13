@@ -8,7 +8,15 @@ module.exports = (sequelize, DataTypes) => {
 		 * The `models/index` file will call this method automatically.
 		 */
 		static associate(models) {
-			// define association here
+			Showtime.belongsTo(models.Cinema, {
+				foreignKey: "cinemaId",
+			});
+			Showtime.belongsTo(models.Movie, {
+				foreignKey: "movieId",
+			});
+			Showtime.belongsTo(models.Screen, {
+				foreignKey: "screenId",
+			});
 		}
 	}
 	Showtime.init(

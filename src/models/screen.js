@@ -8,7 +8,12 @@ module.exports = (sequelize, DataTypes) => {
 		 * The `models/index` file will call this method automatically.
 		 */
 		static associate(models) {
-			// define association here
+			Screen.belongsTo(models.Cinema, {
+				foreignKey: "cinemaId",
+			});
+			Screen.hasMany(models.Showtime, {
+				foreignKey: "screenId",
+			});
 		}
 	}
 	Screen.init(
