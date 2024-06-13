@@ -1,22 +1,3 @@
-// import cinemaService from "../services/cinemaService";
-
-// let handleGetAllCinemas = async (req, res) => {
-// 	try {
-// 		let response = await cinemaService.getAllCinemas();
-// 		return res.status(200).json(response);
-// 	} catch (e) {
-// 		console.log(e);
-// 		return res.status(200).json({
-// 			errCode: -1,
-// 			errMessage: "Error from server",
-// 		});
-// 	}
-// };
-
-// module.exports = {
-// 	handleGetAllCinemas: handleGetAllCinemas,
-// };
-
 import cinemaService from "../services/cinemaService";
 
 let handleCreateNewCinema = async (req, res) => {
