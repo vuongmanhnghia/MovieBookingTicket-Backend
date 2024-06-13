@@ -22,7 +22,7 @@ module.exports = (sequelize, DataTypes) => {
 			releaseDate: DataTypes.DATE,
 			rating: DataTypes.FLOAT,
 			director: DataTypes.STRING,
-			image: DataTypes.STRING,
+			image: DataTypes.BLOB("long"),
 		},
 		{
 			sequelize,
