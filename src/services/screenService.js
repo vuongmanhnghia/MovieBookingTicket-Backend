@@ -33,9 +33,9 @@ let createNewScreen = (data) => {
 	});
 };
 
-let getScreenDetail = (id) => {
+let getScreenDetail = (cinemaId) => {
 	return new Promise(async (resolve, reject) => {
-		if (!id) {
+		if (!cinemaId) {
 			resolve({
 				errCode: 1,
 				errMessage: "Missing required parameter!",
@@ -43,15 +43,9 @@ let getScreenDetail = (id) => {
 		}
 		try {
 			let data = await db.Screen.findAll({
-				where: { id: id },
+				where: { cinemaId: cinemaId },
 				raw: true,
 			});
-
-			resolve({
-				errCode: 2,
-				errMessage: "Screen not found!",
-			});
-
 			resolve({
 				errCode: 0,
 				data: data,
