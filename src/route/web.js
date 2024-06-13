@@ -2,6 +2,7 @@ import express from "express";
 import userController from "../controllers/userController";
 import movieController from "../controllers/movieController";
 import cinemaController from "../controllers/cinemaController";
+import screenController from "../controllers/screenController";
 
 let router = express.Router();
 
@@ -29,6 +30,12 @@ let initWebRoutes = (app) => {
 	router.delete("/api/delete-cinema", cinemaController.handleDeleteCinema);
 	router.get("/api/get-all-cinemas", cinemaController.handleGetAllCinemas);
 	router.get("/api/get-detail-cinema", cinemaController.handleGetDetailCinema);
+
+	// screen
+	router.post(
+		"/api/create-new-screen",
+		screenController.handleCreateNewScreen
+	);
 
 	return app.use("/", router);
 };
