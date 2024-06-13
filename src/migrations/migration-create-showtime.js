@@ -16,11 +16,11 @@ module.exports = {
 				allowNull: false,
 				type: Sequelize.INTEGER,
 			},
-			startTime: {
+			cinemaId: {
 				allowNull: false,
-				type: Sequelize.DATE,
+				type: Sequelize.INTEGER,
 			},
-			endTime: {
+			startTime: {
 				allowNull: false,
 				type: Sequelize.DATE,
 			},
