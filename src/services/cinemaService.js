@@ -1,6 +1,8 @@
 // import { raw } from "body-parser";
 
+import { where } from "sequelize";
 import db from "../models/index";
+import { raw } from "body-parser";
 
 let checkExist = (name) => {
 	return new Promise(async (resolve, reject) => {
@@ -97,19 +99,22 @@ let getCinemaDetail = (id) => {
 		try {
 			let data = await db.Cinema.findOne({
 				where: { id: id },
-				raw: true,
 			});
-
-			if (data && data.image) {
-				data.image = new Buffer.from(data.image, "base64").toString(
-					"binary"
-				);
-			} else {
-				resolve({
-					errCode: 2,
-					errMessage: "Cinema not found!",
-				});
-			}
+			let screen = await db.Screen.findAll({
+				where: { cinemaId: id },
+			});
+			data.screen = screen;
+			console.log(data);
+			// if (data && data.image) {
+			// 	data.image = new Buffer.from(data.image, "base64").toString(
+			// 		"binary"
+			// 	);
+			// } else {
+			// 	resolve({
+			// 		errCode: 2,
+			// 		errMessage: "Cinema not found!",
+			// 	});
+			// }
 			resolve({
 				errCode: 0,
 				data: data,
