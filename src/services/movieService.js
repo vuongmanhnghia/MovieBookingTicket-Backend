@@ -133,8 +133,14 @@ let getMovieDetail = (id) => {
 		try {
 			let data = await db.Movie.findOne({
 				where: { id: id },
+				raw: true,
 			});
-			if (!data) {
+
+			if (data && data.image) {
+				data.image = new Buffer.from(data.image, "base64").toString(
+					"binary"
+				);
+			} else {
 				resolve({
 					errCode: 2,
 					errMessage: "Movie not found!",
