@@ -21,9 +21,9 @@ module.exports = (sequelize, DataTypes) => {
 	}
 	Showtime.init(
 		{
-			movieId: DataTypes.INTEGER,
+			movieId: DataTypes.STRING,
 			screenId: DataTypes.INTEGER,
-			cinemaId: DataTypes.INTEGER,
+			cinemaId: DataTypes.STRING,
 			startTime: DataTypes.DATE,
 		},
 		{

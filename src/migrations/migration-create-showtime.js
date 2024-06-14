@@ -10,7 +10,7 @@ module.exports = {
 			},
 			movieId: {
 				allowNull: false,
-				type: Sequelize.INTEGER,
+				type: Sequelize.STRING,
 			},
 			screenId: {
 				allowNull: false,
@@ -18,7 +18,7 @@ module.exports = {
 			},
 			cinemaId: {
 				allowNull: false,
-				type: Sequelize.INTEGER,
+				type: Sequelize.STRING,
 			},
 			startTime: {
 				allowNull: false,

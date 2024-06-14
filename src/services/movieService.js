@@ -138,7 +138,7 @@ let getMovieDetail = (movieId) => {
 				raw: true,
 			});
 			let showtimeData = await db.Showtime.findAll({
-				where: { movieId: movieId },
+				where: { movieId: data.title },
 			});
 			data.showtimeData = showtimeData;
 			if (data && data.image) {
