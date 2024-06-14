@@ -1,5 +1,7 @@
 import { raw } from "body-parser";
 import db from "../models/index";
+import { resolveInclude } from "ejs";
+import { Model, where } from "sequelize";
 
 let checkExist = (title) => {
 	return new Promise(async (resolve, reject) => {
@@ -122,9 +124,9 @@ let getAllMovies = () => {
 	});
 };
 
-let getMovieDetail = (id) => {
+let getMovieDetail = (movieId) => {
 	return new Promise(async (resolve, reject) => {
-		if (!id) {
+		if (!movieId) {
 			resolve({
 				errCode: 1,
 				errMessage: "Missing required parameter!",
@@ -132,10 +134,13 @@ let getMovieDetail = (id) => {
 		}
 		try {
 			let data = await db.Movie.findOne({
-				where: { id: id },
+				where: { id: movieId },
 				raw: true,
 			});
-
+			let showtimeData = await db.Showtime.findAll({
+				where: { movieId: movieId },
+			});
+			data.showtimeData = showtimeData;
 			if (data && data.image) {
 				data.image = new Buffer.from(data.image, "base64").toString(
 					"binary"
