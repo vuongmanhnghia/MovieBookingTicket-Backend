@@ -75,7 +75,6 @@ let deleteCinema = (name) => {
 
 let getAllCinemas = () => {
 	return new Promise(async (resolve, reject) => {
-		console.log("get all cinemas");
 		try {
 			let Cinemas = await db.Cinema.findAll({});
 			resolve({
