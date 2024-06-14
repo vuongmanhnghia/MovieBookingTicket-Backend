@@ -3,6 +3,7 @@ import userController from "../controllers/userController";
 import movieController from "../controllers/movieController";
 import cinemaController from "../controllers/cinemaController";
 import screenController from "../controllers/screenController";
+import showtimeController from "../controllers/showtimeController";
 
 let router = express.Router();
 
@@ -37,6 +38,12 @@ let initWebRoutes = (app) => {
 		screenController.handleCreateNewScreen
 	);
 	router.get("/api/get-detail-screen", screenController.handleGetDetailScreen);
+
+	// showtime
+	router.post(
+		"/api/create-new-showtime",
+		showtimeController.handleCreateNewShowtime
+	);
 
 	return app.use("/", router);
 };

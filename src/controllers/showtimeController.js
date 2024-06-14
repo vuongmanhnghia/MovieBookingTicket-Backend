@@ -1,0 +1,32 @@
+import showtimeService from "../services/showtimeService";
+
+let handleCreateNewShowtime = async (req, res) => {
+	let message = await showtimeService.createNewShowtime(req.body);
+	return res.status(200).json(message);
+};
+
+// let handleGetDetailShowtime = async (req, res) => {
+// 	try {
+// 		let ShowtimeId = req.query.cinemaId;
+// 		if (!ShowtimeId) {
+// 			return res.status(200).json({
+// 				errCode: 3,
+// 				errMessage: "Missing parameter",
+// 			});
+// 		}
+
+// 		let response = await showtimeService.getShowtimeDetail(ShowtimeId);
+// 		return res.status(200).json(response);
+// 	} catch (e) {
+// 		console.log(e);
+// 		return res.status(200).json({
+// 			errCode: -1,
+// 			errMessage: "Error from server",
+// 		});
+// 	}
+// };
+
+module.exports = {
+	handleCreateNewShowtime: handleCreateNewShowtime,
+	// handleGetDetailShowtime: handleGetDetailShowtime,
+};
