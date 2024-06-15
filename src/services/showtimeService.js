@@ -1,16 +1,25 @@
 import { raw } from "body-parser";
 import db from "../models/index";
 import { name } from "ejs";
+require("dotenv").config();
 
 let createNewShowtime = (data) => {
 	return new Promise(async (resolve, reject) => {
 		try {
+			if (!data.arrShowtimes) {
+				resolve({
+					errCode: 1,
+					errMessage: "Missing required parameter!",
+				});
+			}
+			let arrShowtimes = data.arrShowtimes;
 			let checkExist = await db.Showtime.findOne({
 				where: {
-					movieId: data.movieId,
-					screenId: data.screenId,
-					cinemaId: data.cinemaId,
-					startTime: data.startTime,
+					cinemaId: arrShowtimes[0].cinemaId,
+					movieId: arrShowtimes[0].movieId,
+					startDate: arrShowtimes[0].startDate,
+					screenId: arrShowtimes[0].screenId,
+					startTime: arrShowtimes[0].startTime,
 				},
 			});
 			if (checkExist) {
@@ -19,12 +28,7 @@ let createNewShowtime = (data) => {
 					errMessage: "Showtime is already exist!",
 				});
 			} else {
-				await db.Showtime.create({
-					movieId: data.movieId,
-					screenId: data.screenId,
-					cinemaId: data.cinemaId,
-					startTime: data.startTime,
-				});
+				await db.Showtime.bulkCreate(arrShowtimes);
 				resolve({
 					errCode: 0,
 					errMessage: "Create showtime success!",
