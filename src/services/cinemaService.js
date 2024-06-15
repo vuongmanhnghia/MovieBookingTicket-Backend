@@ -90,9 +90,9 @@ let getAllCinemas = () => {
 	});
 };
 
-let getCinemaDetail = (id) => {
+let getCinemaDetail = (tradeMark) => {
 	return new Promise(async (resolve, reject) => {
-		if (!id) {
+		if (!tradeMark) {
 			resolve({
 				errCode: 1,
 				errMessage: "Missing required parameter!",
@@ -100,23 +100,26 @@ let getCinemaDetail = (id) => {
 		}
 		try {
 			let data = await db.Cinema.findOne({
-				where: { id: id },
+				where: { tradeMark: tradeMark },
 			});
-			let screen = await db.Screen.findAll({
-				where: { cinemaId: id },
+			let screen = await db.Showtime.findAll({
+				where: { cinemaId: data.name },
 			});
-			data.screen = screen;
-			console.log(data);
-			// if (data && data.image) {
-			// 	data.image = new Buffer.from(data.image, "base64").toString(
-			// 		"binary"
-			// 	);
-			// } else {
-			// 	resolve({
-			// 		errCode: 2,
-			// 		errMessage: "Cinema not found!",
-			// 	});
-			// }
+			data.showtime = screen;
+			if (data && data.image && data.background) {
+				data.image = new Buffer.from(data.image, "base64").toString(
+					"binary"
+				);
+				data.background = new Buffer.from(
+					data.background,
+					"base64"
+				).toString("binary");
+			} else {
+				resolve({
+					errCode: 2,
+					errMessage: "Cinema not found!",
+				});
+			}
 			resolve({
 				errCode: 0,
 				data: data,

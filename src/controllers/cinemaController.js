@@ -32,15 +32,8 @@ let handleGetAllCinemas = async (req, res) => {
 
 let handleGetDetailCinema = async (req, res) => {
 	try {
-		let CinemaId = req.query.id;
-		if (!CinemaId) {
-			return res.status(200).json({
-				errCode: 3,
-				errMessage: "Missing parameter",
-			});
-		}
-
-		let response = await cinemaService.getCinemaDetail(CinemaId);
+		let tradeMark = req.query.id;
+		let response = await cinemaService.getCinemaDetail(tradeMark);
 		return res.status(200).json(response);
 	} catch (e) {
 		console.log(e);
