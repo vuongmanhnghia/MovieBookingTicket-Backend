@@ -11,6 +11,11 @@ module.exports = {
 				primaryKey: true,
 				type: Sequelize.INTEGER,
 			},
+			tradeMark: {
+				allowNull: false,
+				type: Sequelize.STRING,
+			},
+
 			name: {
 				allowNull: false,
 				type: Sequelize.STRING,
@@ -22,6 +27,11 @@ module.exports = {
 			rating: {
 				allowNull: false,
 				type: Sequelize.FLOAT,
+			},
+
+			image: {
+				allowNull: false,
+				type: Sequelize.BLOB("long"),
 			},
 			createdAt: {
 				allowNull: false,

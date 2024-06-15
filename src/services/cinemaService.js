@@ -34,9 +34,11 @@ let createNewCinema = (data) => {
 				});
 			} else {
 				await db.Cinema.create({
+					tradeMark: data.tradeMark,
 					name: data.name,
 					location: data.location,
 					rating: data.rating,
+					image: data.image,
 				});
 				resolve({
 					errCode: 0,

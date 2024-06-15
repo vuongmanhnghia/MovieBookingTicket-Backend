@@ -19,9 +19,11 @@ module.exports = (sequelize, DataTypes) => {
 	}
 	Cinema.init(
 		{
+			tradeMark: DataTypes.STRING,
 			name: DataTypes.STRING,
 			location: DataTypes.STRING,
 			rating: DataTypes.FLOAT,
+			image: DataTypes.BLOB("long"),
 		},
 		{
 			sequelize,
