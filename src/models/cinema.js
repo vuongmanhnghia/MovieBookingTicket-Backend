@@ -24,6 +24,7 @@ module.exports = (sequelize, DataTypes) => {
 			location: DataTypes.STRING,
 			rating: DataTypes.FLOAT,
 			image: DataTypes.BLOB("long"),
+			background: DataTypes.BLOB("long"),
 		},
 		{
 			sequelize,

@@ -39,6 +39,7 @@ let createNewCinema = (data) => {
 					location: data.location,
 					rating: data.rating,
 					image: data.image,
+					background: data.background,
 				});
 				resolve({
 					errCode: 0,

@@ -28,8 +28,11 @@ module.exports = {
 				allowNull: false,
 				type: Sequelize.FLOAT,
 			},
-
 			image: {
+				allowNull: false,
+				type: Sequelize.BLOB("long"),
+			},
+			background: {
 				allowNull: false,
 				type: Sequelize.BLOB("long"),
 			},
