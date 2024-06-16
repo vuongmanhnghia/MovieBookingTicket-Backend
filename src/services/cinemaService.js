@@ -99,27 +99,21 @@ let getCinemaDetail = (tradeMark) => {
 			});
 		}
 		try {
-			let data = await db.Cinema.findOne({
+			console.log(tradeMark);
+			let data = [];
+			let countData = await db.Cinema.findAll({
 				where: { tradeMark: tradeMark },
 			});
-			let screen = await db.Showtime.findAll({
-				where: { cinemaId: data.name },
-			});
-			data.showtime = screen;
-			if (data && data.image && data.background) {
-				data.image = new Buffer.from(data.image, "base64").toString(
+			await countData.map(async (item, index) => {
+				item.image = new Buffer.from(item.image, "base64").toString(
 					"binary"
 				);
-				data.background = new Buffer.from(
-					data.background,
+				item.background = new Buffer.from(
+					item.background,
 					"base64"
 				).toString("binary");
-			} else {
-				resolve({
-					errCode: 2,
-					errMessage: "Cinema not found!",
-				});
-			}
+				data.push(item);
+			});
 			resolve({
 				errCode: 0,
 				data: data,
