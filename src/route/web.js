@@ -44,6 +44,10 @@ let initWebRoutes = (app) => {
 		"/api/create-new-showtime",
 		showtimeController.handleCreateNewShowtime
 	);
+	router.get(
+		"/api/get-showtime-by-cinema",
+		showtimeController.handleGetShowtimeByCinema
+	);
 
 	return app.use("/", router);
 };

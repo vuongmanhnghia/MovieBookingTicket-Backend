@@ -1,6 +1,8 @@
 import { raw } from "body-parser";
 import db from "../models/index";
 import { name } from "ejs";
+import { Model, where } from "sequelize";
+import { at } from "lodash";
 require("dotenv").config();
 
 let createNewShowtime = (data) => {
@@ -40,6 +42,64 @@ let createNewShowtime = (data) => {
 	});
 };
 
+let getShowtimeByCinema = (name) => {
+	return new Promise(async (resolve, reject) => {
+		if (!name) {
+			resolve({
+				errCode: 1,
+				errMessage: "Missing required parameter!",
+			});
+		}
+		try {
+			let data = await db.Showtime.findAll({
+				where: { cinemaId: name },
+				attributes: ["movieId", "startDate", "startTime", "screenId"],
+				raw: true,
+			});
+			console.log(data);
+			if (data.length === 0) {
+				console.log("Cinema is not showtime!");
+				resolve({
+					errCode: 1,
+					errMessage: "Cinema is not showtime!",
+				});
+				return;
+			}
+			let nameMovie = data[0].movieId;
+			let arrResult = [];
+			for (let i = 0; i < data.length; i++) {
+				if (i > 0 && nameMovie === data[i].movieId) {
+					continue;
+				}
+				nameMovie = data[i].movieId;
+				let result = {};
+
+				let dataMovie = await db.Movie.findOne({
+					where: { title: nameMovie },
+					attributes: ["title", "image", "genre"],
+					raw: true,
+				});
+				dataMovie.image = new Buffer.from(
+					dataMovie.image,
+					"base64"
+				).toString("binary");
+				result.movie = dataMovie;
+				let dataShowtime = data.filter(
+					(item) => item.movieId === nameMovie
+				);
+				result.showtime = dataShowtime;
+				arrResult.push(result);
+			}
+			resolve({
+				errCode: 0,
+				data: arrResult,
+			});
+		} catch (e) {
+			reject(e);
+		}
+	});
+};
+
 // let getShowtimeDetail = (cinemaId) => {
 // 	return new Promise(async (resolve, reject) => {
 // 		if (!cinemaId) {
@@ -65,5 +125,6 @@ let createNewShowtime = (data) => {
 
 module.exports = {
 	createNewShowtime: createNewShowtime,
+	getShowtimeByCinema: getShowtimeByCinema,
 	// getShowtimeDetail: getShowtimeDetail,
 };
