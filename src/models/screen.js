@@ -21,6 +21,7 @@ module.exports = (sequelize, DataTypes) => {
 	}
 	Screen.init(
 		{
+			tradeMarkId: DataTypes.STRING,
 			cinemaId: DataTypes.INTEGER,
 			name: DataTypes.STRING,
 			totalSeats: DataTypes.INTEGER,

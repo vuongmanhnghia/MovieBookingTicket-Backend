@@ -8,9 +8,13 @@ module.exports = {
 				primaryKey: true,
 				type: Sequelize.INTEGER,
 			},
+			tradeMarkId: {
+				allowNull: false,
+				type: Sequelize.STRING,
+			},
 			cinemaId: {
 				allowNull: false,
-				type: Sequelize.INTEGER,
+				type: Sequelize.STRING,
 			},
 			name: {
 				allowNull: false,
