@@ -32,6 +32,14 @@ let initWebRoutes = (app) => {
 	router.delete("/api/delete-cinema", cinemaController.handleDeleteCinema);
 	router.get("/api/get-all-cinemas", cinemaController.handleGetAllCinemas);
 	router.get("/api/get-detail-cinema", cinemaController.handleGetDetailCinema);
+	router.get(
+		"/api/get-all-trademarks",
+		cinemaController.handleGetAllTradeMarks
+	);
+	router.get(
+		"/api/get-all-cinemas-by-trademark",
+		cinemaController.handleGetAllCinemaByTradeMark
+	);
 
 	// screen
 	router.post(

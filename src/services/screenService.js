@@ -7,6 +7,7 @@ let createNewScreen = (data) => {
 		try {
 			let checkExist = await db.Screen.findOne({
 				where: {
+					tradeMarkId: data.tradeMarkId,
 					cinemaId: data.cinemaId,
 					name: data.name,
 				},
@@ -17,27 +18,16 @@ let createNewScreen = (data) => {
 					errMessage: "Screen is already exist!",
 				});
 			} else {
-				let checkExistCinema = await db.Cinema.findOne({
-					where: {
-						id: data.cinemaId,
-					},
+				await db.Screen.create({
+					tradeMarkId: data.tradeMarkId,
+					cinemaId: data.cinemaId,
+					name: data.name,
+					totalSeats: data.totalSeats,
 				});
-				if (!checkExistCinema) {
-					resolve({
-						errCode: 2,
-						errMessage: "Cinema is not exist!",
-					});
-				} else {
-					await db.Screen.create({
-						cinemaId: data.cinemaId,
-						name: data.name,
-						totalSeats: data.totalSeats,
-					});
-					resolve({
-						errCode: 0,
-						errMessage: "Create screen success!",
-					});
-				}
+				resolve({
+					errCode: 0,
+					errMessage: "Create screen success!",
+				});
 			}
 		} catch (e) {
 			reject(e);

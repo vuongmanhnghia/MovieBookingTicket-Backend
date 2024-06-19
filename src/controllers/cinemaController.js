@@ -44,9 +44,38 @@ let handleGetDetailCinema = async (req, res) => {
 	}
 };
 
+let handleGetAllTradeMarks = async (req, res) => {
+	try {
+		let response = await cinemaService.getAllTradeMarks();
+		return res.status(200).json(response);
+	} catch (e) {
+		console.log(e);
+		return res.status(200).json({
+			errCode: -1,
+			errMessage: "Error from server",
+		});
+	}
+};
+
+let handleGetAllCinemaByTradeMark = async (req, res) => {
+	try {
+		let tradeMark = req.query.tradeMark;
+		let response = await cinemaService.getAllCinemaByTradeMark(tradeMark);
+		return res.status(200).json(response);
+	} catch (e) {
+		console.log(e);
+		return res.status(200).json({
+			errCode: -1,
+			errMessage: "Error from server",
+		});
+	}
+};
+
 module.exports = {
 	handleCreateNewCinema: handleCreateNewCinema,
 	handleDeleteCinema: handleDeleteCinema,
 	handleGetAllCinemas: handleGetAllCinemas,
 	handleGetDetailCinema: handleGetDetailCinema,
+	handleGetAllTradeMarks: handleGetAllTradeMarks,
+	handleGetAllCinemaByTradeMark: handleGetAllCinemaByTradeMark,
 };

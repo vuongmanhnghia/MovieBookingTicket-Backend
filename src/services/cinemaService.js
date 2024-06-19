@@ -124,9 +124,49 @@ let getCinemaDetail = (tradeMark) => {
 	});
 };
 
+let getAllTradeMarks = () => {
+	return new Promise(async (resolve, reject) => {
+		try {
+			let data = await db.Cinema.findAll({
+				attributes: ["tradeMark"],
+			});
+			resolve({
+				errCode: 0,
+				data: data,
+			});
+		} catch (e) {
+			reject(e);
+		}
+	});
+};
+
+let getAllCinemaByTradeMark = (tradeMark) => {
+	return new Promise(async (resolve, reject) => {
+		if (!tradeMark) {
+			resolve({
+				errCode: 1,
+				errMessage: "Missing required parameter!",
+			});
+		}
+		try {
+			let data = await db.Cinema.findAll({
+				where: { tradeMark: tradeMark },
+			});
+			resolve({
+				errCode: 0,
+				data: data,
+			});
+		} catch (e) {
+			reject(e);
+		}
+	});
+};
+
 module.exports = {
 	createNewCinema: createNewCinema,
 	deleteCinema: deleteCinema,
 	getAllCinemas: getAllCinemas,
 	getCinemaDetail: getCinemaDetail,
+	getAllTradeMarks: getAllTradeMarks,
+	getAllCinemaByTradeMark: getAllCinemaByTradeMark,
 };
