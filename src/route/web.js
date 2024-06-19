@@ -4,6 +4,7 @@ import movieController from "../controllers/movieController";
 import cinemaController from "../controllers/cinemaController";
 import screenController from "../controllers/screenController";
 import showtimeController from "../controllers/showtimeController";
+import seatController from "../controllers/seatController";
 
 let router = express.Router();
 
@@ -48,6 +49,9 @@ let initWebRoutes = (app) => {
 		"/api/get-showtime-by-cinema",
 		showtimeController.handleGetShowtimeByCinema
 	);
+
+	// Seat
+	router.post("/api/create-new-seat", seatController.handleCreateNewSeat);
 
 	return app.use("/", router);
 };
