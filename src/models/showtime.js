@@ -22,6 +22,7 @@ module.exports = (sequelize, DataTypes) => {
 	Showtime.init(
 		{
 			movieId: DataTypes.STRING,
+			tradeMarkId: DataTypes.STRING,
 			screenId: DataTypes.INTEGER,
 			cinemaId: DataTypes.STRING,
 			startDate: DataTypes.DATE,

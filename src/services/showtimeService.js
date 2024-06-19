@@ -17,6 +17,7 @@ let createNewShowtime = (data) => {
 			let arrShowtimes = data.arrShowtimes;
 			let checkExist = await db.Showtime.findOne({
 				where: {
+					tradeMarkId: arrShowtimes[0].tradeMarkId,
 					cinemaId: arrShowtimes[0].cinemaId,
 					movieId: arrShowtimes[0].movieId,
 					startDate: arrShowtimes[0].startDate,

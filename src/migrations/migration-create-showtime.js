@@ -12,6 +12,10 @@ module.exports = {
 				allowNull: false,
 				type: Sequelize.STRING,
 			},
+			tradeMarkId: {
+				allowNull: false,
+				type: Sequelize.STRING,
+			},
 			screenId: {
 				allowNull: false,
 				type: Sequelize.INTEGER,
