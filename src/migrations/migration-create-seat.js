@@ -8,6 +8,10 @@ module.exports = {
 				primaryKey: true,
 				type: Sequelize.INTEGER,
 			},
+			cinemaId: {
+				allowNull: false,
+				type: Sequelize.STRING,
+			},
 			screenId: {
 				allowNull: false,
 				type: Sequelize.INTEGER,

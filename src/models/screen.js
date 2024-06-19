@@ -14,6 +14,9 @@ module.exports = (sequelize, DataTypes) => {
 			Screen.hasMany(models.Showtime, {
 				foreignKey: "screenId",
 			});
+			Screen.hasMany(models.Seat, {
+				foreignKey: "screenId",
+			});
 		}
 	}
 	Screen.init(
