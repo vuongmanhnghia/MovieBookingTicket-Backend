@@ -23,6 +23,7 @@ let createNewScreen = (data) => {
 					cinemaId: data.cinemaId,
 					name: data.name,
 					totalSeats: data.totalSeats,
+					priceSeats: data.priceSeats,
 				});
 				resolve({
 					errCode: 0,

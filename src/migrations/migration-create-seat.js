@@ -16,6 +16,10 @@ module.exports = {
 				allowNull: false,
 				type: Sequelize.INTEGER,
 			},
+			priceSeats: {
+				allowNull: false,
+				type: Sequelize.INTEGER,
+			},
 			seatNumber: {
 				allowNull: false,
 				type: Sequelize.INTEGER,
