@@ -36,13 +36,17 @@ module.exports = {
 				allowNull: false,
 				type: Sequelize.INTEGER,
 			},
-			bookingDate: {
+			totalTickets: {
 				allowNull: false,
-				type: Sequelize.DATE,
+				type: Sequelize.INTEGER,
 			},
 			totalPrice: {
 				allowNull: false,
 				type: Sequelize.FLOAT,
+			},
+			bookingDate: {
+				allowNull: false,
+				type: Sequelize.DATE,
 			},
 			createdAt: {
 				allowNull: false,
