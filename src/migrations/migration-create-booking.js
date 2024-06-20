@@ -8,7 +8,27 @@ module.exports = {
 				primaryKey: true,
 				type: Sequelize.INTEGER,
 			},
-			userId: {
+			fullName: {
+				allowNull: false,
+				type: Sequelize.STRING,
+			},
+			email: {
+				allowNull: false,
+				type: Sequelize.STRING,
+			},
+			phoneNumber: {
+				allowNull: false,
+				type: Sequelize.INTEGER,
+			},
+			movieId: {
+				allowNull: false,
+				type: Sequelize.STRING,
+			},
+			cinemaId: {
+				allowNull: false,
+				type: Sequelize.STRING,
+			},
+			screenId: {
 				allowNull: false,
 				type: Sequelize.INTEGER,
 			},

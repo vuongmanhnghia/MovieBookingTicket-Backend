@@ -7,13 +7,16 @@ module.exports = (sequelize, DataTypes) => {
 		 * This method is not a part of Sequelize lifecycle.
 		 * The `models/index` file will call this method automatically.
 		 */
-		static associate(models) {
-			// define association here
-		}
+		static associate(models) {}
 	}
 	Booking.init(
 		{
-			userId: DataTypes.INTEGER,
+			fullName: DataTypes.STRING,
+			email: DataTypes.STRING,
+			phoneNumber: DataTypes.INTEGER,
+			movieId: DataTypes.STRING,
+			cinemaId: DataTypes.STRING,
+			screenId: DataTypes.INTEGER,
 			showtimeId: DataTypes.INTEGER,
 			bookingDate: DataTypes.DATE,
 			totalPrice: DataTypes.FLOAT,

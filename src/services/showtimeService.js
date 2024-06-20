@@ -116,7 +116,9 @@ let getSeatsByShowtime = (data) => {
 					cinemaId: data.cinemaId,
 					name: data.screenId,
 				},
-				attributes: ["tradeMarkId", "cinemaId", "name", "totalSeats"],
+				attributes: {
+					exclude: ["createdAt", "updatedAt"],
+				},
 				raw: true,
 			});
 			if (!dataSeats) {
