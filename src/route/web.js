@@ -5,6 +5,7 @@ import cinemaController from "../controllers/cinemaController";
 import screenController from "../controllers/screenController";
 import showtimeController from "../controllers/showtimeController";
 import seatController from "../controllers/seatController";
+import bookingController from "../controllers/bookingController";
 
 let router = express.Router();
 
@@ -64,6 +65,12 @@ let initWebRoutes = (app) => {
 
 	// Seat
 	router.post("/api/create-new-seat", seatController.handleCreateNewSeat);
+
+	// Booking
+	router.post(
+		"/api/create-new-booking",
+		bookingController.handleCreateNewBooking
+	);
 
 	return app.use("/", router);
 };
