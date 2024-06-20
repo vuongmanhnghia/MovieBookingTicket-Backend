@@ -2,11 +2,14 @@
 
 import { where } from "sequelize";
 import db from "../models/index";
+import emailService from "./emailService";
 // import { raw } from "body-parser";
 
 let createNewBooking = (data) => {
 	return new Promise(async (resolve, reject) => {
 		try {
+			await emailService.sendSimpleEmail(data.email);
+
 			await db.Booking.create({
 				fullName: data.fullName,
 				email: data.email,

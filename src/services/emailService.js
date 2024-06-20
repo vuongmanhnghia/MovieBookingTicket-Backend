@@ -1,8 +1,8 @@
 require("dotenv").config();
 import nodemailer from "nodemailer";
 
-let sendSimpleEmail = async (dataSend) => {
-	const transporter = nodemailer.createTransport({
+let sendSimpleEmail = async (reciverEmail) => {
+	let transporter = nodemailer.createTransport({
 		host: "smtp.gmail.com",
 		port: 587,
 		secure: false,
@@ -12,13 +12,12 @@ let sendSimpleEmail = async (dataSend) => {
 		},
 	});
 
-	const info = await transporter.sendMail({
+	let info = await transporter.sendMail({
 		from: '"Vuong Manh Nghia 👻" <vuongmanhnghia@gmail.com>',
-		address,
-		to: dataSend.reciverEmail,
+		to: reciverEmail,
 		subject: "Thông tin đặt vé xem phim ✔",
 		html: `
-      <h3>Xin chào ${dataSend.userName}!</h3>
+      <h3>Xin chào!</h3>
       <p>Chúc mừng bạn đã đặt vé thành công!</p>`,
 	});
 };
