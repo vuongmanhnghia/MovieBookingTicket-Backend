@@ -6,9 +6,22 @@ import emailService from "./emailService";
 // import { raw } from "body-parser";
 
 let createNewBooking = (data) => {
+	console.log(data);
 	return new Promise(async (resolve, reject) => {
 		try {
-			await emailService.sendSimpleEmail(data.email);
+			await emailService.sendSimpleEmail({
+				reciverEmail: data.email,
+				fullName: data.fullName,
+				phoneNumber: data.phoneNumber,
+				movieName: data.movieId,
+				showDate: new Date(data.date),
+				showTime: data.time,
+				cinemaName: data.cinemaId,
+				screenName: data.screenId,
+				totalTickets: data.totalTickets,
+				totalPrice: data.totalPrice,
+				bookingDate: new Date(data.bookingDate),
+			});
 
 			await db.Booking.create({
 				fullName: data.fullName,
@@ -17,7 +30,8 @@ let createNewBooking = (data) => {
 				movieId: data.movieId,
 				cinemaId: data.cinemaId,
 				screenId: data.screenId,
-				showtimeId: data.showtimeId,
+				time: data.time,
+				date: data.date,
 				totalTickets: data.totalTickets,
 				totalPrice: data.totalPrice,
 				bookingDate: data.bookingDate,

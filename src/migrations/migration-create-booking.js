@@ -32,9 +32,13 @@ module.exports = {
 				allowNull: false,
 				type: Sequelize.INTEGER,
 			},
-			showtimeId: {
+			time: {
 				allowNull: false,
-				type: Sequelize.INTEGER,
+				type: Sequelize.STRING,
+			},
+			date: {
+				allowNull: false,
+				type: Sequelize.DATE,
 			},
 			totalTickets: {
 				allowNull: false,
