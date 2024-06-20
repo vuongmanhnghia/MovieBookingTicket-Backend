@@ -46,6 +46,9 @@ let getScreenDetail = (cinemaId) => {
 		try {
 			let data = await db.Screen.findAll({
 				where: { cinemaId: cinemaId },
+				attributes: {
+					exclude: ["createdAt", "updatedAt"],
+				},
 				raw: true,
 			});
 			resolve({

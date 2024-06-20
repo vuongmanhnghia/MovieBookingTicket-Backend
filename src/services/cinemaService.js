@@ -79,7 +79,11 @@ let deleteCinema = (name) => {
 let getAllCinemas = () => {
 	return new Promise(async (resolve, reject) => {
 		try {
-			let Cinemas = await db.Cinema.findAll({});
+			let Cinemas = await db.Cinema.findAll({
+				attributes: {
+					exclude: ["createdAt", "updatedAt"],
+				},
+			});
 			resolve({
 				errCode: 0,
 				data: Cinemas,
@@ -103,6 +107,9 @@ let getCinemaDetail = (tradeMark) => {
 			let data = [];
 			let countData = await db.Cinema.findAll({
 				where: { tradeMark: tradeMark },
+				attributes: {
+					exclude: ["createdAt", "updatedAt"],
+				},
 			});
 			await countData.map(async (item, index) => {
 				item.image = new Buffer.from(item.image, "base64").toString(
@@ -151,6 +158,9 @@ let getAllCinemaByTradeMark = (tradeMark) => {
 		try {
 			let data = await db.Cinema.findAll({
 				where: { tradeMark: tradeMark },
+				attributes: {
+					exclude: ["createdAt", "updatedAt"],
+				},
 			});
 			resolve({
 				errCode: 0,

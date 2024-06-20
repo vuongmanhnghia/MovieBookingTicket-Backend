@@ -101,6 +101,40 @@ let getShowtimeByCinema = (name) => {
 	});
 };
 
+let getSeatsByShowtime = (data) => {
+	return new Promise(async (resolve, reject) => {
+		if (!data.tradeMarkId || !data.cinemaId || !data.screenId) {
+			resolve({
+				errCode: 1,
+				errMessage: "Missing required parameter!",
+			});
+		}
+		try {
+			let dataSeats = await db.Screen.findOne({
+				where: {
+					tradeMarkId: data.tradeMarkId,
+					cinemaId: data.cinemaId,
+					name: data.screenId,
+				},
+				attributes: ["tradeMarkId", "cinemaId", "name", "totalSeats"],
+				raw: true,
+			});
+			if (!dataSeats) {
+				resolve({
+					errCode: 2,
+					errMessage: "Showtime is not exist!",
+				});
+			}
+			resolve({
+				errCode: 0,
+				data: dataSeats,
+			});
+		} catch (e) {
+			reject(e);
+		}
+	});
+};
+
 // let getShowtimeDetail = (cinemaId) => {
 // 	return new Promise(async (resolve, reject) => {
 // 		if (!cinemaId) {
@@ -127,5 +161,6 @@ let getShowtimeByCinema = (name) => {
 module.exports = {
 	createNewShowtime: createNewShowtime,
 	getShowtimeByCinema: getShowtimeByCinema,
+	getSeatsByShowtime: getSeatsByShowtime,
 	// getShowtimeDetail: getShowtimeDetail,
 };

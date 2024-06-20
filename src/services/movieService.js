@@ -83,6 +83,9 @@ let getTopMovies = (limit) => {
 			let movies = await db.Movie.findAll({
 				limit: limit,
 				order: [["createdAt", "DESC"]],
+				attributes: {
+					exclude: ["createdAt", "updatedAt"],
+				},
 				// raw: true;
 			});
 			resolve({
@@ -135,10 +138,16 @@ let getMovieDetail = (movieId) => {
 		try {
 			let data = await db.Movie.findOne({
 				where: { id: movieId },
+				attributes: {
+					exclude: ["createdAt", "updatedAt"],
+				},
 				raw: true,
 			});
 			let showtimeData = await db.Showtime.findAll({
 				where: { movieId: data.title },
+				attributes: {
+					exclude: ["createdAt", "updatedAt"],
+				},
 			});
 			data.showtimeData = showtimeData;
 			if (data && data.image) {

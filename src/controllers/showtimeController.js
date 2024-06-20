@@ -10,6 +10,11 @@ let handleGetShowtimeByCinema = async (req, res) => {
 	return res.status(200).json(message);
 };
 
+let handleGetSeatsByShowtime = async (req, res) => {
+	let message = await showtimeService.getSeatsByShowtime(req.body);
+	return res.status(200).json(message);
+};
+
 // let handleGetDetailShowtime = async (req, res) => {
 // 	try {
 // 		let ShowtimeId = req.query.cinemaId;
@@ -34,5 +39,6 @@ let handleGetShowtimeByCinema = async (req, res) => {
 module.exports = {
 	handleCreateNewShowtime: handleCreateNewShowtime,
 	handleGetShowtimeByCinema: handleGetShowtimeByCinema,
+	handleGetSeatsByShowtime: handleGetSeatsByShowtime,
 	// handleGetDetailShowtime: handleGetDetailShowtime,
 };
