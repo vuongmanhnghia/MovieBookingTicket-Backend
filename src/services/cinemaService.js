@@ -137,7 +137,13 @@ let getAllTradeMarks = () => {
 		try {
 			let data = await db.Cinema.findAll({
 				attributes: {
-					includes: ["tradeMark, image"],
+					exclude: [
+						"location",
+						"rating",
+						"background",
+						"createdAt",
+						"updatedAt",
+					],
 				},
 			});
 			data.map((item) => {
