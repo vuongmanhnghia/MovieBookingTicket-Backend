@@ -3,6 +3,7 @@
 import { where } from "sequelize";
 import db from "../models/index";
 import { raw } from "body-parser";
+import { includes } from "lodash";
 
 let checkExist = (name) => {
 	return new Promise(async (resolve, reject) => {
@@ -135,8 +136,18 @@ let getAllTradeMarks = () => {
 	return new Promise(async (resolve, reject) => {
 		try {
 			let data = await db.Cinema.findAll({
-				attributes: ["tradeMark"],
+				attributes: {
+					includes: ["tradeMark, image"],
+				},
 			});
+			data.map((item) => {
+				if (item && item.image) {
+					item.image = new Buffer.from(item.image, "base64").toString(
+						"binary"
+					);
+				}
+			});
+			console.log(data);
 			resolve({
 				errCode: 0,
 				data: data,
