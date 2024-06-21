@@ -153,7 +153,6 @@ let getAllTradeMarks = () => {
 					);
 				}
 			});
-			console.log(data);
 			resolve({
 				errCode: 0,
 				data: data,
