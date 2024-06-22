@@ -57,7 +57,6 @@ let getShowtimeByCinema = (name) => {
 				attributes: ["movieId", "startDate", "startTime", "screenId"],
 				raw: true,
 			});
-			console.log(data);
 			if (data.length === 0) {
 				console.log("Cinema is not showtime!");
 				resolve({

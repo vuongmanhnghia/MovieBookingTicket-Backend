@@ -104,7 +104,6 @@ let getCinemaDetail = (tradeMark) => {
 			});
 		}
 		try {
-			console.log(tradeMark);
 			let data = [];
 			let countData = await db.Cinema.findAll({
 				where: { tradeMark: tradeMark },

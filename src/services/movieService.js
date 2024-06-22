@@ -160,7 +160,6 @@ let getMovieDetail = (movieId) => {
 					errMessage: "Movie not found!",
 				});
 			}
-			console.log("data", data);
 			resolve({
 				errCode: 0,
 				data: data,

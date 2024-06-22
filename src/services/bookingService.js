@@ -6,7 +6,6 @@ import emailService from "./emailService";
 // import { raw } from "body-parser";
 
 let createNewBooking = (data) => {
-	console.log(data);
 	return new Promise(async (resolve, reject) => {
 		try {
 			await emailService.sendSimpleEmail({
