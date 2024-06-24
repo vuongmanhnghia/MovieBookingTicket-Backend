@@ -58,7 +58,6 @@ let getShowtimeByCinema = (name) => {
 				raw: true,
 			});
 			if (data.length === 0) {
-				console.log("Cinema is not showtime!");
 				resolve({
 					errCode: 1,
 					errMessage: "Cinema is not showtime!",

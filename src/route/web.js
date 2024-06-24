@@ -24,6 +24,7 @@ let initWebRoutes = (app) => {
 	router.get("/api/get-top-movies", movieController.handleGetTopMovies);
 	router.get("/api/get-all-movies", movieController.handleGetAllMovies);
 	router.get("/api/get-detail-movie", movieController.handleGetDetailMovie);
+	router.get("/api/get-movies", movieController.handleGetMoviesPage);
 
 	// cinema
 	router.post(

@@ -170,10 +170,46 @@ let getMovieDetail = (movieId) => {
 	});
 };
 
+let getMoviesPage = (page, limit) => {
+	return new Promise(async (resolve, reject) => {
+		try {
+			let offset = (page - 1) * limit;
+			let { count, rows } = await db.Movie.findAndCountAll({
+				offset: offset,
+				limit: limit,
+
+				order: [["createdAt", "DESC"]],
+				attributes: {
+					exclude: ["createdAt", "updatedAt"],
+				},
+			});
+
+			rows.map((item) => {
+				item.image = new Buffer.from(item.image, "base64").toString(
+					"binary"
+				);
+			});
+
+			let data = {
+				totalPage: Math.ceil(count / limit),
+				totalRows: count,
+				movies: rows,
+			};
+			resolve({
+				errCode: 0,
+				data: data,
+			});
+		} catch (e) {
+			reject(e);
+		}
+	});
+};
+
 module.exports = {
 	createNewMovie: createNewMovie,
 	deleteMovie: deleteMovie,
 	getTopMovies: getTopMovies,
 	getAllMovies: getAllMovies,
 	getMovieDetail: getMovieDetail,
+	getMoviesPage: getMoviesPage,
 };
