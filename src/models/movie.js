@@ -23,6 +23,7 @@ module.exports = (sequelize, DataTypes) => {
 			rating: DataTypes.FLOAT,
 			director: DataTypes.STRING,
 			image: DataTypes.BLOB("long"),
+			background: DataTypes.BLOB("long"),
 			trailer: DataTypes.STRING,
 		},
 		{

@@ -40,6 +40,10 @@ module.exports = {
 				allowNull: false,
 				type: Sequelize.BLOB("long"),
 			},
+			background: {
+				allowNull: false,
+				type: Sequelize.BLOB("long"),
+			},
 			trailer: {
 				allowNull: false,
 				type: Sequelize.STRING,

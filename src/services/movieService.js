@@ -41,6 +41,7 @@ let createNewMovie = (data) => {
 					rating: data.rating,
 					director: data.director,
 					image: data.image,
+					background: data.background,
 					trailer: data.trailer,
 				});
 				resolve({
