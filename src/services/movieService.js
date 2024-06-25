@@ -41,6 +41,7 @@ let createNewMovie = (data) => {
 					rating: data.rating,
 					director: data.director,
 					image: data.image,
+					trailer: data.trailer,
 				});
 				resolve({
 					errCode: 0,
@@ -88,6 +89,11 @@ let getTopMovies = (limit) => {
 				},
 				// raw: true;
 			});
+			movies.map((item) => {
+				item.image = new Buffer.from(item.image, "base64").toString(
+					"binary"
+				);
+			});
 			resolve({
 				errCode: 0,
 				data: movies,
@@ -96,27 +102,18 @@ let getTopMovies = (limit) => {
 			reject(e);
 		}
 	});
-	// return new Promise(async (resolve, reject) => {
-	// 	try {
-	// 		let movies = await db.Movie.findAll({
-	// 			limit: limit,
-	// 			order: [["id", "DESC"]],
-	// 		});
-	// 		//raw: true
-	// 		resolve({
-	// 			errCode: 0,
-	// 			data: movies,
-	// 		});
-	// 	} catch (e) {
-	// 		reject(e);
-	// 	}
-	// });
 };
 
 let getAllMovies = () => {
 	return new Promise(async (resolve, reject) => {
 		try {
 			let movies = await db.Movie.findAll({});
+
+			movies.map((item) => {
+				item.image = new Buffer.from(item.image, "base64").toString(
+					"binary"
+				);
+			});
 			resolve({
 				errCode: 0,
 				data: movies,
