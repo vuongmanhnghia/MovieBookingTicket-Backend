@@ -86,7 +86,7 @@ let getTopMovies = (limit) => {
 				limit: limit,
 				order: [["createdAt", "DESC"]],
 				attributes: {
-					exclude: ["createdAt", "updatedAt"],
+					exclude: ["createdAt", "updatedAt", "background"],
 				},
 				// raw: true;
 			});
@@ -114,6 +114,10 @@ let getAllMovies = () => {
 				item.image = new Buffer.from(item.image, "base64").toString(
 					"binary"
 				);
+				item.background = new Buffer.from(
+					item.background,
+					"base64"
+				).toString("binary");
 			});
 			resolve({
 				errCode: 0,
@@ -148,10 +152,14 @@ let getMovieDetail = (movieId) => {
 				},
 			});
 			data.showtimeData = showtimeData;
-			if (data && data.image) {
+			if (data && data.image && data.background) {
 				data.image = new Buffer.from(data.image, "base64").toString(
 					"binary"
 				);
+				data.background = new Buffer.from(
+					data.background,
+					"base64"
+				).toString("binary");
 			} else {
 				resolve({
 					errCode: 2,
@@ -178,7 +186,7 @@ let getMoviesPage = (page, limit) => {
 
 				order: [["createdAt", "DESC"]],
 				attributes: {
-					exclude: ["createdAt", "updatedAt"],
+					exclude: ["createdAt", "updatedAt", "background"],
 				},
 			});
 
@@ -203,6 +211,44 @@ let getMoviesPage = (page, limit) => {
 	});
 };
 
+let getReviewMoviesPage = (page, limit) => {
+	return new Promise(async (resolve, reject) => {
+		try {
+			let offset = (page - 1) * limit;
+			let { count, rows } = await db.Movie.findAndCountAll({
+				offset: offset,
+				limit: limit,
+				order: [["createdAt", "DESC"]],
+				attributes: {
+					exclude: ["createdAt", "updatedAt"],
+				},
+			});
+
+			rows.map((item) => {
+				item.image = new Buffer.from(item.image, "base64").toString(
+					"binary"
+				);
+				item.background = new Buffer.from(
+					item.background,
+					"base64"
+				).toString("binary");
+			});
+
+			let data = {
+				totalPage: Math.ceil(count / limit),
+				totalRows: count,
+				movies: rows,
+			};
+			resolve({
+				errCode: 0,
+				data: data,
+			});
+		} catch (e) {
+			reject(e);
+		}
+	});
+};
+
 module.exports = {
 	createNewMovie: createNewMovie,
 	deleteMovie: deleteMovie,
@@ -210,4 +256,5 @@ module.exports = {
 	getAllMovies: getAllMovies,
 	getMovieDetail: getMovieDetail,
 	getMoviesPage: getMoviesPage,
+	getReviewMoviesPage: getReviewMoviesPage,
 };

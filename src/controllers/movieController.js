@@ -91,6 +91,29 @@ let handleGetMoviesPage = async (req, res) => {
 	}
 };
 
+let handleGetReviewMoviesPage = async (req, res) => {
+	try {
+		if (req.query.page && req.query.limit) {
+			let page = req.query.page;
+			let limit = req.query.limit;
+
+			let response = await movieService.getReviewMoviesPage(+page, +limit);
+			return res.status(200).json(response);
+		} else {
+			return res.status(200).json({
+				errCode: 3,
+				errMessage: "Missing parameter",
+			});
+		}
+	} catch (e) {
+		console.log(e);
+		return res.status(200).json({
+			errCode: -1,
+			errMessage: "Error from server",
+		});
+	}
+};
+
 module.exports = {
 	handleCreateNewMovie: handleCreateNewMovie,
 	handleDeleteMovie: handleDeleteMovie,
@@ -98,4 +121,5 @@ module.exports = {
 	handleGetAllMovies: handleGetAllMovies,
 	handleGetDetailMovie: handleGetDetailMovie,
 	handleGetMoviesPage: handleGetMoviesPage,
+	handleGetReviewMoviesPage: handleGetReviewMoviesPage,
 };
