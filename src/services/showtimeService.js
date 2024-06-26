@@ -19,7 +19,6 @@ let createNewShowtime = (data) => {
 				where: {
 					tradeMarkId: arrShowtimes[0].tradeMarkId,
 					cinemaId: arrShowtimes[0].cinemaId,
-					movieId: arrShowtimes[0].movieId,
 					startDate: arrShowtimes[0].startDate,
 					screenId: arrShowtimes[0].screenId,
 					startTime: arrShowtimes[0].startTime,
