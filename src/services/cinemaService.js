@@ -135,17 +135,12 @@ let getAllTradeMarks = () => {
 	return new Promise(async (resolve, reject) => {
 		try {
 			let data = await db.Cinema.findAll({
-				attributes: {
-					exclude: [
-						"location",
-						"rating",
-						"background",
-						"createdAt",
-						"updatedAt",
-					],
-				},
+				attributes: ["tradeMark", "image"],
 			});
-			data.map((item) => {
+			let allTradeMarks = filterTradeMarks(data).map((item) => {
+				return item;
+			});
+			allTradeMarks.map((item) => {
 				if (item && item.image) {
 					item.image = new Buffer.from(item.image, "base64").toString(
 						"binary"
@@ -154,10 +149,22 @@ let getAllTradeMarks = () => {
 			});
 			resolve({
 				errCode: 0,
-				data: data,
+				data: allTradeMarks,
 			});
 		} catch (e) {
 			reject(e);
+		}
+	});
+};
+
+let filterTradeMarks = (items) => {
+	const seenNames = new Set();
+	return items.filter((item) => {
+		if (seenNames.has(item.tradeMark)) {
+			return false;
+		} else {
+			seenNames.add(item.tradeMark);
+			return true;
 		}
 	});
 };
