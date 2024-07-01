@@ -82,8 +82,14 @@ let getAllCinemas = () => {
 		try {
 			let Cinemas = await db.Cinema.findAll({
 				attributes: {
-					exclude: ["createdAt", "updatedAt"],
+					exclude: ["createdAt", "updatedAt", "id", "background"],
 				},
+			});
+
+			Cinemas.map((item) => {
+				item.image = new Buffer.from(item.image, "base64").toString(
+					"binary"
+				);
 			});
 			resolve({
 				errCode: 0,
