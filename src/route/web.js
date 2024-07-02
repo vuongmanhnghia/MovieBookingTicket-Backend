@@ -46,6 +46,10 @@ let initWebRoutes = (app) => {
 		"/api/get-all-cinemas-by-trademark",
 		cinemaController.handleGetAllCinemaByTradeMark
 	);
+	router.get(
+		"/api/get-tradeMark-by-cinema",
+		cinemaController.handleGetTradeMarkByCinema
+	);
 
 	// screen
 	router.post(

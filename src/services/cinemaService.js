@@ -187,9 +187,44 @@ let getAllCinemaByTradeMark = (tradeMark) => {
 			let data = await db.Cinema.findAll({
 				where: { tradeMark: tradeMark },
 				attributes: {
-					exclude: ["createdAt", "updatedAt"],
+					exclude: [
+						"createdAt",
+						"updatedAt",
+						"background",
+						"tradeMark",
+						"rating",
+						"image",
+						"id",
+					],
 				},
 			});
+			resolve({
+				errCode: 0,
+				data: data,
+			});
+		} catch (e) {
+			reject(e);
+		}
+	});
+};
+
+let getTradeMarkByCinema = (name) => {
+	return new Promise(async (resolve, reject) => {
+		if (!name) {
+			resolve({
+				errCode: 1,
+				errMessage: "Missing required parameter!",
+			});
+		}
+		try {
+			let data = await db.Cinema.findOne({
+				where: { name: name },
+				attributes: ["image", "name", "location", "background", "rating"],
+			});
+			data.image = new Buffer.from(data.image, "base64").toString("binary");
+			data.background = new Buffer.from(data.background, "base64").toString(
+				"binary"
+			);
 			resolve({
 				errCode: 0,
 				data: data,
@@ -207,4 +242,5 @@ module.exports = {
 	getCinemaDetail: getCinemaDetail,
 	getAllTradeMarks: getAllTradeMarks,
 	getAllCinemaByTradeMark: getAllCinemaByTradeMark,
+	getTradeMarkByCinema: getTradeMarkByCinema,
 };
