@@ -3,6 +3,7 @@ import db from "../models/index";
 import { name } from "ejs";
 import { Model, where } from "sequelize";
 import { at } from "lodash";
+import e from "cors";
 require("dotenv").config();
 
 let createNewShowtime = (data) => {
@@ -15,27 +16,37 @@ let createNewShowtime = (data) => {
 				});
 			}
 			let arrShowtimes = data.arrShowtimes;
-			let checkExist = await db.Showtime.findOne({
-				where: {
-					tradeMarkId: arrShowtimes[0].tradeMarkId,
-					cinemaId: arrShowtimes[0].cinemaId,
-					startDate: arrShowtimes[0].startDate,
-					screenId: arrShowtimes[0].screenId,
-					startTime: arrShowtimes[0].startTime,
-				},
+			await arrShowtimes.map(async (item) => {
+				let checkExist = await db.Showtime.findOne({
+					where: {
+						tradeMarkId: item.tradeMarkId,
+						cinemaId: item.cinemaId,
+						startDate: item.startDate,
+						screenId: item.screenId,
+						startTime: item.startTime,
+					},
+				});
+
+				if (checkExist) {
+					resolve({
+						errCode: 1,
+						errMessage: "Showtime is already exist!",
+					});
+				} else {
+					await db.Showtime.create({
+						tradeMarkId: item.tradeMarkId,
+						movieId: item.movieId,
+						cinemaId: item.cinemaId,
+						screenId: item.screenId,
+						startDate: item.startDate,
+						startTime: item.startTime,
+					});
+					resolve({
+						errCode: 0,
+						errMessage: "Create showtime success!",
+					});
+				}
 			});
-			if (checkExist) {
-				resolve({
-					errCode: 1,
-					errMessage: "Showtime is already exist!",
-				});
-			} else {
-				await db.Showtime.bulkCreate(arrShowtimes);
-				resolve({
-					errCode: 0,
-					errMessage: "Create showtime success!",
-				});
-			}
 		} catch (e) {
 			reject(e);
 		}
@@ -134,32 +145,59 @@ let getSeatsByShowtime = (data) => {
 	});
 };
 
-// let getShowtimeDetail = (cinemaId) => {
-// 	return new Promise(async (resolve, reject) => {
-// 		if (!cinemaId) {
-// 			resolve({
-// 				errCode: 1,
-// 				errMessage: "Missing required parameter!",
-// 			});
-// 		}
-// 		try {
-// 			let data = await db.Showtime.findAll({
-// 				where: { cinemaId: cinemaId },
-// 				raw: true,
-// 			});
-// 			resolve({
-// 				errCode: 0,
-// 				data: data,
-// 			});
-// 		} catch (e) {
-// 			reject(e);
-// 		}
-// 	});
-// };
+let getShowtimeByCinemaAndDate = (data) => {
+	console.log(data);
+	return new Promise(async (resolve, reject) => {
+		if (!data || !data.name || !data.date) {
+			resolve({
+				errCode: 1,
+				errMessage: "Missing required parameter!",
+			});
+		}
+		try {
+			let dataShowtime = await db.Showtime.findAll({
+				where: {
+					cinemaId: data.name,
+					startDate: data.date,
+				},
+				attributes: {
+					exclude: ["createdAt", "updatedAt", "id"],
+				},
+				raw: true,
+			});
+			if (dataShowtime.length === 0) {
+				resolve({
+					errCode: 2,
+					errMessage: "Showtime is not exist!",
+				});
+			}
+
+			let result = {};
+			let nameMovie = dataShowtime[0].movieId;
+			let dataMovie = await db.Movie.findOne({
+				where: { title: nameMovie },
+				attributes: ["title", "image", "genre"],
+				raw: true,
+			});
+			dataMovie.image = new Buffer.from(dataMovie.image, "base64").toString(
+				"binary"
+			);
+			result.movie = dataMovie;
+			result.showtime = dataShowtime;
+
+			resolve({
+				errCode: 0,
+				data: result,
+			});
+		} catch (e) {
+			reject(e);
+		}
+	});
+};
 
 module.exports = {
 	createNewShowtime: createNewShowtime,
 	getShowtimeByCinema: getShowtimeByCinema,
 	getSeatsByShowtime: getSeatsByShowtime,
-	// getShowtimeDetail: getShowtimeDetail,
+	getShowtimeByCinemaAndDate: getShowtimeByCinemaAndDate,
 };
