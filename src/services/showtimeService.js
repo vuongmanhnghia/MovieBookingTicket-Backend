@@ -2,7 +2,7 @@ import { raw } from "body-parser";
 import db from "../models/index";
 import { name } from "ejs";
 import { Model, where } from "sequelize";
-import { at } from "lodash";
+import { at, result } from "lodash";
 import e from "cors";
 require("dotenv").config();
 
@@ -146,7 +146,6 @@ let getSeatsByShowtime = (data) => {
 };
 
 let getShowtimeByCinemaAndDate = (data) => {
-	console.log(data);
 	return new Promise(async (resolve, reject) => {
 		if (!data || !data.name || !data.date) {
 			resolve({
@@ -172,28 +171,54 @@ let getShowtimeByCinemaAndDate = (data) => {
 				});
 			}
 
-			let result = {};
-			let nameMovie = dataShowtime[0].movieId;
-			let dataMovie = await db.Movie.findOne({
-				where: { title: nameMovie },
-				attributes: ["title", "image", "genre"],
-				raw: true,
-			});
-			dataMovie.image = new Buffer.from(dataMovie.image, "base64").toString(
-				"binary"
-			);
-			result.movie = dataMovie;
-			result.showtime = dataShowtime;
+			let handleData = await dataShowtime.reduce((acc, item) => {
+				if (!acc[item.movieId]) {
+					acc[item.movieId] = [];
+				}
+				acc[item.movieId].push(item);
+				return acc;
+			}, {});
+
+			let arrNameMovie = dataShowtime
+				.map((item) => item.movieId)
+				.filter((value, index, self) => self.indexOf(value) === index);
+			data = [];
+			for (let i = 0; i < arrNameMovie.length; i++) {
+				let result = {};
+
+				let dataMovie = await db.Movie.findOne({
+					where: { title: arrNameMovie[i] },
+					attributes: ["title", "image", "genre"],
+					raw: true,
+				});
+				dataMovie.image = new Buffer.from(
+					dataMovie.image,
+					"base64"
+				).toString("binary");
+				result.movie = dataMovie;
+				result.showtime = handleData[arrNameMovie[i]];
+				data.push(result);
+			}
 
 			resolve({
 				errCode: 0,
-				data: result,
+				data: data,
 			});
 		} catch (e) {
 			reject(e);
 		}
 	});
 };
+
+// let groupedShowtimes = SHOWTIME.reduce((acc, showtime) => {
+// 	// Nếu movieId chưa tồn tại trong acc, khởi tạo nó với một mảng rỗng
+// 	if (!acc[showtime.movieId]) {
+// 		acc[showtime.movieId] = [];
+// 	}
+// 	// Đẩy showtime vào mảng tương ứng với movieId
+// 	acc[showtime.movieId].push(showtime);
+// 	return acc;
+// }, {});
 
 module.exports = {
 	createNewShowtime: createNewShowtime,
