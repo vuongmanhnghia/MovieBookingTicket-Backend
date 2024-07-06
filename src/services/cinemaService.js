@@ -219,7 +219,14 @@ let getTradeMarkByCinema = (name) => {
 		try {
 			let data = await db.Cinema.findOne({
 				where: { name: name },
-				attributes: ["image", "name", "location", "background", "rating"],
+				attributes: [
+					"image",
+					"name",
+					"location",
+					"background",
+					"rating",
+					"tradeMark",
+				],
 			});
 			data.image = new Buffer.from(data.image, "base64").toString("binary");
 			data.background = new Buffer.from(data.background, "base64").toString(

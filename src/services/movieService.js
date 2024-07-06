@@ -129,9 +129,9 @@ let getAllMovies = () => {
 	});
 };
 
-let getMovieDetail = (movieId) => {
+let getMovieDetail = (nameMovie) => {
 	return new Promise(async (resolve, reject) => {
-		if (!movieId) {
+		if (!nameMovie) {
 			resolve({
 				errCode: 1,
 				errMessage: "Missing required parameter!",
@@ -139,7 +139,7 @@ let getMovieDetail = (movieId) => {
 		}
 		try {
 			let data = await db.Movie.findOne({
-				where: { id: movieId },
+				where: { title: nameMovie },
 				attributes: {
 					exclude: ["createdAt", "updatedAt"],
 				},
