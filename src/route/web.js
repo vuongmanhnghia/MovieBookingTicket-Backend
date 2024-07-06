@@ -75,6 +75,10 @@ let initWebRoutes = (app) => {
 		"/api/get-showtime-by-cinema-and-date",
 		showtimeController.handleGetShowtimeByCinemaAndDate
 	);
+	router.get(
+		"/api/get-showtime-by-movie-and-date-and-trademark",
+		showtimeController.handleGetShowtimeByCinemaAndDateAndMovie
+	);
 
 	// Seat
 	router.post("/api/create-new-seat", seatController.handleCreateNewSeat);

@@ -1,6 +1,6 @@
 import { raw } from "body-parser";
 import db from "../models/index";
-import { resolveInclude } from "ejs";
+import { name, resolveInclude } from "ejs";
 import { Model, where } from "sequelize";
 
 let checkExist = (title) => {
@@ -86,7 +86,15 @@ let getTopMovies = (limit) => {
 				limit: limit,
 				order: [["createdAt", "DESC"]],
 				attributes: {
-					exclude: ["createdAt", "updatedAt", "background"],
+					exclude: [
+						"createdAt",
+						"updatedAt",
+						"background",
+						"duration",
+						"director",
+						"id",
+						"releaseDate",
+					],
 				},
 				// raw: true;
 			});
@@ -130,6 +138,7 @@ let getAllMovies = () => {
 };
 
 let getMovieDetail = (nameMovie) => {
+	console.log(nameMovie);
 	return new Promise(async (resolve, reject) => {
 		if (!nameMovie) {
 			resolve({
@@ -141,17 +150,10 @@ let getMovieDetail = (nameMovie) => {
 			let data = await db.Movie.findOne({
 				where: { title: nameMovie },
 				attributes: {
-					exclude: ["createdAt", "updatedAt"],
+					exclude: ["createdAt", "updatedAt", "id"],
 				},
 				raw: true,
 			});
-			let showtimeData = await db.Showtime.findAll({
-				where: { movieId: data.title },
-				attributes: {
-					exclude: ["createdAt", "updatedAt"],
-				},
-			});
-			data.showtimeData = showtimeData;
 			if (data && data.image && data.background) {
 				data.image = new Buffer.from(data.image, "base64").toString(
 					"binary"

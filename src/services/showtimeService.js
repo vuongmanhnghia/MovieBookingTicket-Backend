@@ -210,19 +210,74 @@ let getShowtimeByCinemaAndDate = (data) => {
 	});
 };
 
-// let groupedShowtimes = SHOWTIME.reduce((acc, showtime) => {
-// 	// Nếu movieId chưa tồn tại trong acc, khởi tạo nó với một mảng rỗng
-// 	if (!acc[showtime.movieId]) {
-// 		acc[showtime.movieId] = [];
-// 	}
-// 	// Đẩy showtime vào mảng tương ứng với movieId
-// 	acc[showtime.movieId].push(showtime);
-// 	return acc;
-// }, {});
+let getShowtimeByCinemaAndDateAndMovie = (data) => {
+	return new Promise(async (resolve, reject) => {
+		if (
+			!data ||
+			!data.nameMovie ||
+			!data.dateSelected ||
+			!data.tradeMarkSelected
+		) {
+			resolve({
+				errCode: 1,
+				errMessage: "Missing required parameter!",
+			});
+		}
+		try {
+			let dataShowtime = await db.Showtime.findAll({
+				where: {
+					movieId: data.nameMovie,
+					tradeMarkId: data.tradeMarkSelected,
+					startDate: data.dateSelected,
+				},
+				attributes: {
+					exclude: ["createdAt", "updatedAt", "id"],
+				},
+				raw: true,
+			});
+			if (dataShowtime.length === 0) {
+				resolve({
+					errCode: 2,
+					errMessage: "Showtime is not exist!",
+				});
+			}
+
+			let handleData = await dataShowtime.reduce((acc, item) => {
+				if (!acc[item.cinemaId]) {
+					acc[item.cinemaId] = [];
+				}
+				acc[item.cinemaId].push(item);
+				return acc;
+			}, {});
+			let arrCinema = dataShowtime
+				.map((item) => item.cinemaId)
+				.filter((value, index, self) => self.indexOf(value) === index);
+			data = [];
+			for (let i = 0; i < arrCinema.length; i++) {
+				let result = {};
+				let dataCinema = await db.Cinema.findOne({
+					where: { name: arrCinema[i] },
+					attributes: ["name", "location"],
+					raw: true,
+				});
+				result.cinema = dataCinema;
+				result.showtime = handleData[arrCinema[i]];
+				data.push(result);
+			}
+			resolve({
+				errCode: 0,
+				data: data,
+			});
+		} catch (e) {
+			reject(e);
+		}
+	});
+};
 
 module.exports = {
 	createNewShowtime: createNewShowtime,
 	getShowtimeByCinema: getShowtimeByCinema,
 	getSeatsByShowtime: getSeatsByShowtime,
 	getShowtimeByCinemaAndDate: getShowtimeByCinemaAndDate,
+	getShowtimeByCinemaAndDateAndMovie: getShowtimeByCinemaAndDateAndMovie,
 };
