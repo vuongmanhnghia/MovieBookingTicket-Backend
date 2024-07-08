@@ -6,10 +6,10 @@ let handleCreateNewBooking = async (req, res) => {
 };
 
 let handleGetBookingByCinemaMovieScreenDateTime = async (req, res) => {
-	let data = await bookingService.getBookingByCinemaMovieScreenDateTime(
-		req.query
+	let response = await bookingService.getBookingByCinemaMovieScreenDateTime(
+		req.body
 	);
-	return res.status(200).json(data);
+	return res.status(200).json(response);
 };
 
 module.exports = {

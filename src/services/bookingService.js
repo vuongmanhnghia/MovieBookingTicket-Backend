@@ -1,23 +1,31 @@
 import { where } from "sequelize";
 import db from "../models/index";
 import emailService from "./emailService";
+import { at } from "lodash";
 
 let createNewBooking = (data) => {
 	return new Promise(async (resolve, reject) => {
 		try {
-			await emailService.sendSimpleEmail({
-				reciverEmail: data.email,
-				fullName: data.fullName,
-				phoneNumber: data.phoneNumber,
-				movieName: data.movieId,
-				showDate: new Date(data.date),
-				showTime: data.time,
-				cinemaName: data.cinemaId,
-				screenName: data.screenId,
-				totalTickets: data.totalTickets,
-				totalPrice: data.totalPrice,
-				bookingDate: new Date(data.bookingDate),
-			});
+			try {
+				await emailService.sendSimpleEmail({
+					reciverEmail: data.email,
+					fullName: data.fullName,
+					phoneNumber: data.phoneNumber,
+					movieName: data.movieId,
+					showDate: new Date(data.date),
+					showTime: data.time,
+					cinemaName: data.cinemaId,
+					screenName: data.screenId,
+					totalTickets: data.totalTickets,
+					totalPrice: data.totalPrice,
+					bookingDate: new Date(data.bookingDate),
+				});
+			} catch (e) {
+				resolve({
+					errCode: 3,
+					errMessage: "Mail không tồn tại!",
+				});
+			}
 
 			await db.Booking.create({
 				fullName: data.fullName,
@@ -42,23 +50,28 @@ let createNewBooking = (data) => {
 	});
 };
 
-let getTotalBooking = () => {
+let getBookingByCinemaMovieScreenDateTime = (data) => {
 	return new Promise(async (resolve, reject) => {
 		try {
-			let data = await db.Booking.findAndCountAll({
-				where: { status: "active" },
+			let dataBooking = await db.Booking.findAll({
+				where: {
+					cinemaId: data.cinema,
+					movieId: data.movie,
+					screenId: data.screen,
+					time: data.time,
+					date: data.date,
+				},
+				attributes: ["totalTickets"],
 			});
-			if (data) {
-				resolve({
-					errCode: 0,
-					data: data,
-				});
-			} else {
-				resolve({
-					errCode: 1,
-					errMessage: "Error!",
-				});
+			let totalBooking = 0;
+			for (let i = 0; i < dataBooking.length; i++) {
+				totalBooking += dataBooking[i].totalTickets;
 			}
+			resolve({
+				errCode: 0,
+				errMessage: "Create Booking success!",
+				data: { totalBooking: totalBooking },
+			});
 		} catch (e) {
 			reject(e);
 		}
@@ -67,5 +80,5 @@ let getTotalBooking = () => {
 
 module.exports = {
 	createNewBooking: createNewBooking,
-	getTotalBooking: getTotalBooking,
+	getBookingByCinemaMovieScreenDateTime: getBookingByCinemaMovieScreenDateTime,
 };
