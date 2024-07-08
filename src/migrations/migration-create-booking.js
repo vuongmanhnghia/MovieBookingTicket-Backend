@@ -38,7 +38,7 @@ module.exports = {
 			},
 			date: {
 				allowNull: false,
-				type: Sequelize.DATE,
+				type: Sequelize.STRING,
 			},
 			totalTickets: {
 				allowNull: false,
@@ -50,7 +50,7 @@ module.exports = {
 			},
 			bookingDate: {
 				allowNull: false,
-				type: Sequelize.DATE,
+				type: Sequelize.STRING,
 			},
 			createdAt: {
 				allowNull: false,

@@ -138,7 +138,6 @@ let getAllMovies = () => {
 };
 
 let getMovieDetail = (nameMovie) => {
-	console.log(nameMovie);
 	return new Promise(async (resolve, reject) => {
 		if (!nameMovie) {
 			resolve({

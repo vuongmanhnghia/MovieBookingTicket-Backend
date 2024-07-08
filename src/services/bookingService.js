@@ -42,6 +42,30 @@ let createNewBooking = (data) => {
 	});
 };
 
+let getTotalBooking = () => {
+	return new Promise(async (resolve, reject) => {
+		try {
+			let data = await db.Booking.findAndCountAll({
+				where: { status: "active" },
+			});
+			if (data) {
+				resolve({
+					errCode: 0,
+					data: data,
+				});
+			} else {
+				resolve({
+					errCode: 1,
+					errMessage: "Error!",
+				});
+			}
+		} catch (e) {
+			reject(e);
+		}
+	});
+};
+
 module.exports = {
 	createNewBooking: createNewBooking,
+	getTotalBooking: getTotalBooking,
 };

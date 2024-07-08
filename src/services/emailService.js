@@ -1,5 +1,6 @@
 require("dotenv").config();
 import nodemailer from "nodemailer";
+import moment from "moment";
 
 let sendSimpleEmail = async (data) => {
 	let transporter = nodemailer.createTransport({
@@ -22,15 +23,17 @@ let sendSimpleEmail = async (data) => {
       <p>Chúc mừng bạn đã đặt vé thành công!</p>
 		<p>Thông tin vé của bạn:</p>
 		<div><b>Tên phim:</b> ${data.movieName}</div>
-		<div><b>Ngày chiếu:</b> ${data.showDate}</div>
+		<div><b>Ngày chiếu:</b> ${moment(data.showDate).format("DD/MM/YYYY")}</div>
 		<div><b>Giờ chiếu:</b> ${data.showTime}</div>
 		<div><b>Rạp:</b> ${data.cinemaName}</div>
 		<div><b>Phòng chiếu:</b> ${data.screenName}</div>
 		<div><b>Tổng số vé:</b> ${data.totalTickets}</div>
-		<div><b>Tổng tiền:</b> ${data.totalPrice}đ</div>
-		<div><b>Ngày đặt:</b> ${data.bookingDate}</div>
+		<div><b>Tổng số tiền:</b> ${data.totalPrice}đ</div>
+		<div><b>Thời gian đặt vé :</b> ${moment(data.bookingDate, "HH:mm").format(
+			"hh:mm A - DD/MM/YYYY"
+		)}</div>
 		<p>Cảm ơn bạn đã sử dụng dịch vụ của chúng tôi!</p>
-		<p>Chúc bạn xem phim vui vẻ!</p>`,
+		<b><p>Chúc bạn xem phim vui vẻ!</p></b>`,
 	});
 };
 

@@ -88,6 +88,10 @@ let initWebRoutes = (app) => {
 		"/api/create-new-booking",
 		bookingController.handleCreateNewBooking
 	);
+	router.get(
+		"/api/get-booking-by-cinema-movie-screen-date-time",
+		bookingController.handleGetBookingByCinemaMovieScreenDateTime
+	);
 
 	return app.use("/", router);
 };
