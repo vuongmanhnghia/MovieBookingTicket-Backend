@@ -29,6 +29,10 @@ let initWebRoutes = (app) => {
 		"/api/get-review-movies",
 		movieController.handleGetReviewMoviesPage
 	);
+	router.get(
+		"/api/get-all-movies-search",
+		movieController.handleGetAllMoviesSearch
+	);
 
 	// cinema
 	router.post(

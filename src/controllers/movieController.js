@@ -114,6 +114,11 @@ let handleGetReviewMoviesPage = async (req, res) => {
 	}
 };
 
+let handleGetAllMoviesSearch = async (req, res) => {
+	let message = await movieService.getAllMoviesSearch(req.query.keyword);
+	return res.status(200).json(message);
+};
+
 module.exports = {
 	handleCreateNewMovie: handleCreateNewMovie,
 	handleDeleteMovie: handleDeleteMovie,
@@ -122,4 +127,5 @@ module.exports = {
 	handleGetDetailMovie: handleGetDetailMovie,
 	handleGetMoviesPage: handleGetMoviesPage,
 	handleGetReviewMoviesPage: handleGetReviewMoviesPage,
+	handleGetAllMoviesSearch: handleGetAllMoviesSearch,
 };

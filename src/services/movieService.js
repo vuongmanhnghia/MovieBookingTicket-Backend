@@ -250,6 +250,34 @@ let getReviewMoviesPage = (page, limit) => {
 	});
 };
 
+let getAllMoviesSearch = (key) => {
+	return new Promise(async (resolve, reject) => {
+		try {
+			let movies = await db.Movie.findAll({
+				limit: 10,
+				where: {
+					title: {
+						[db.Sequelize.Op.like]: `%${key}%`,
+					},
+				},
+				attributes: ["title", "image", "rating", "genre"],
+				order: [["createdAt", "DESC"]],
+			});
+			movies.map((item) => {
+				item.image = new Buffer.from(item.image, "base64").toString(
+					"binary"
+				);
+			});
+			resolve({
+				errCode: 0,
+				data: movies,
+			});
+		} catch (e) {
+			reject(e);
+		}
+	});
+};
+
 module.exports = {
 	createNewMovie: createNewMovie,
 	deleteMovie: deleteMovie,
@@ -258,4 +286,5 @@ module.exports = {
 	getMovieDetail: getMovieDetail,
 	getMoviesPage: getMoviesPage,
 	getReviewMoviesPage: getReviewMoviesPage,
+	getAllMoviesSearch: getAllMoviesSearch,
 };
