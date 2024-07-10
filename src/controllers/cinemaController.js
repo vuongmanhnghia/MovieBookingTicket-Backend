@@ -85,6 +85,12 @@ let handleGetTradeMarkByCinema = async (req, res) => {
 	}
 };
 
+let handleGetDetailTradeMark = async (req, res) => {
+	let tradeMark = req.query.name;
+	let response = await cinemaService.getDetailTradeMark(tradeMark);
+	return res.status(200).json(response);
+};
+
 module.exports = {
 	handleCreateNewCinema: handleCreateNewCinema,
 	handleDeleteCinema: handleDeleteCinema,
@@ -93,4 +99,5 @@ module.exports = {
 	handleGetAllTradeMarks: handleGetAllTradeMarks,
 	handleGetAllCinemaByTradeMark: handleGetAllCinemaByTradeMark,
 	handleGetTradeMarkByCinema: handleGetTradeMarkByCinema,
+	handleGetDetailTradeMark: handleGetDetailTradeMark,
 };

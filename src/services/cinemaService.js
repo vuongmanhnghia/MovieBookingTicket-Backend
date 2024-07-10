@@ -113,18 +113,19 @@ let getCinemaDetail = (tradeMark) => {
 			let data = [];
 			let countData = await db.Cinema.findAll({
 				where: { tradeMark: tradeMark },
-				attributes: {
-					exclude: ["createdAt", "updatedAt"],
-				},
+				attributes: ["name", "location"],
+				// {
+				// 	exclude: ["createdAt", "updatedAt"],
+				// },
 			});
 			await countData.map(async (item, index) => {
-				item.image = new Buffer.from(item.image, "base64").toString(
-					"binary"
-				);
-				item.background = new Buffer.from(
-					item.background,
-					"base64"
-				).toString("binary");
+				// item.image = new Buffer.from(item.image, "base64").toString(
+				// 	"binary"
+				// );
+				// item.background = new Buffer.from(
+				// 	item.background,
+				// 	"base64"
+				// ).toString("binary");
 				data.push(item);
 			});
 			resolve({
@@ -242,6 +243,33 @@ let getTradeMarkByCinema = (name) => {
 	});
 };
 
+let getDetailTradeMark = (tradeMark) => {
+	return new Promise(async (resolve, reject) => {
+		if (!tradeMark) {
+			resolve({
+				errCode: 1,
+				errMessage: "Missing required parameter!",
+			});
+		}
+		try {
+			let data = await db.Cinema.findOne({
+				where: { tradeMark: tradeMark },
+				attributes: ["tradeMark", "image", "background", "rating"],
+			});
+			data.image = new Buffer.from(data.image, "base64").toString("binary");
+			data.background = new Buffer.from(data.background, "base64").toString(
+				"binary"
+			);
+			resolve({
+				errCode: 0,
+				data: data,
+			});
+		} catch (e) {
+			reject(e);
+		}
+	});
+};
+
 module.exports = {
 	createNewCinema: createNewCinema,
 	deleteCinema: deleteCinema,
@@ -250,4 +278,5 @@ module.exports = {
 	getAllTradeMarks: getAllTradeMarks,
 	getAllCinemaByTradeMark: getAllCinemaByTradeMark,
 	getTradeMarkByCinema: getTradeMarkByCinema,
+	getDetailTradeMark: getDetailTradeMark,
 };

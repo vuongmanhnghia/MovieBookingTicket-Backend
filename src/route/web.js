@@ -54,6 +54,10 @@ let initWebRoutes = (app) => {
 		"/api/get-tradeMark-by-cinema",
 		cinemaController.handleGetTradeMarkByCinema
 	);
+	router.get(
+		"/api/get-detail-trademark",
+		cinemaController.handleGetDetailTradeMark
+	);
 
 	// screen
 	router.post(
