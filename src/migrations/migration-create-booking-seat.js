@@ -8,13 +8,33 @@ module.exports = {
 				primaryKey: true,
 				type: Sequelize.INTEGER,
 			},
-			bookingId: {
+			cinema: {
+				allowNull: false,
+				type: Sequelize.STRING,
+			},
+			screen: {
+				allowNull: false,
+				type: Sequelize.STRING,
+			},
+			date: {
+				allowNull: false,
+				type: Sequelize.STRING,
+			},
+			time: {
+				allowNull: false,
+				type: Sequelize.STRING,
+			},
+			seat: {
+				allowNull: false,
+				type: Sequelize.STRING,
+			},
+			numberSeat: {
 				allowNull: false,
 				type: Sequelize.INTEGER,
 			},
-			seatId: {
+			bookingDate: {
 				allowNull: false,
-				type: Sequelize.INTEGER,
+				type: Sequelize.STRING,
 			},
 			createdAt: {
 				allowNull: false,

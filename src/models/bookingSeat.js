@@ -2,19 +2,17 @@
 const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
 	class BookingSeat extends Model {
-		/**
-		 * Helper method for defining associations.
-		 * This method is not a part of Sequelize lifecycle.
-		 * The `models/index` file will call this method automatically.
-		 */
-		static associate(models) {
-			// define association here
-		}
+		static associate(models) {}
 	}
 	BookingSeat.init(
 		{
-			bookingId: DataTypes.INTEGER,
-			seatId: DataTypes.INTEGER,
+			cinema: DataTypes.STRING,
+			screen: DataTypes.STRING,
+			date: DataTypes.STRING,
+			time: DataTypes.STRING,
+			seat: DataTypes.STRING,
+			numberSeat: DataTypes.INTEGER,
+			bookingDate: DataTypes.STRING,
 		},
 		{
 			sequelize,

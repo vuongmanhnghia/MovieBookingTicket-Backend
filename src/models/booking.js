@@ -20,7 +20,7 @@ module.exports = (sequelize, DataTypes) => {
 			time: DataTypes.STRING,
 			date: DataTypes.STRING,
 			totalTickets: DataTypes.INTEGER,
-			totalPrice: DataTypes.FLOAT,
+			totalPrice: DataTypes.STRING,
 			bookingDate: DataTypes.STRING,
 		},
 		{

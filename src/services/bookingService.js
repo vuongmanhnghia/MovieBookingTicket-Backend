@@ -19,6 +19,21 @@ let createNewBooking = (data) => {
 					totalTickets: data.totalTickets,
 					totalPrice: data.totalPrice,
 					bookingDate: new Date(data.bookingDate),
+					seatsSelected: data.seatsSelected,
+				});
+
+				await db.Booking.create({
+					fullName: data.fullName,
+					email: data.email,
+					phoneNumber: data.phoneNumber,
+					movieId: data.movieId,
+					cinemaId: data.cinemaId,
+					screenId: data.screenId,
+					time: data.time,
+					date: data.date,
+					totalTickets: data.totalTickets,
+					totalPrice: data.totalPrice,
+					bookingDate: data.bookingDate,
 				});
 			} catch (e) {
 				resolve({
@@ -26,23 +41,29 @@ let createNewBooking = (data) => {
 					errMessage: "Mail không tồn tại!",
 				});
 			}
-
-			await db.Booking.create({
-				fullName: data.fullName,
-				email: data.email,
-				phoneNumber: data.phoneNumber,
-				movieId: data.movieId,
-				cinemaId: data.cinemaId,
-				screenId: data.screenId,
-				time: data.time,
-				date: data.date,
-				totalTickets: data.totalTickets,
-				totalPrice: data.totalPrice,
-				bookingDate: data.bookingDate,
-			});
 			resolve({
 				errCode: 0,
 				errMessage: "Create Booking success!",
+			});
+		} catch (e) {
+			reject(e);
+		}
+	});
+};
+
+let createNewBookingSeat = (data) => {
+	return new Promise(async (resolve, reject) => {
+		try {
+			if (!data || data.length === 0) {
+				resolve({
+					errCode: 2,
+					errMessage: "Missing required parameter!",
+				});
+			}
+			await db.BookingSeat.bulkCreate(data);
+			resolve({
+				errCode: 0,
+				errMessage: "Create Booking Seat success!",
 			});
 		} catch (e) {
 			reject(e);
@@ -81,4 +102,5 @@ let getBookingByCinemaMovieScreenDateTime = (data) => {
 module.exports = {
 	createNewBooking: createNewBooking,
 	getBookingByCinemaMovieScreenDateTime: getBookingByCinemaMovieScreenDateTime,
+	createNewBookingSeat: createNewBookingSeat,
 };

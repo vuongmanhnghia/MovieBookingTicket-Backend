@@ -97,6 +97,10 @@ let initWebRoutes = (app) => {
 		bookingController.handleCreateNewBooking
 	);
 	router.post(
+		"/api/create-new-booking-seat",
+		bookingController.handleCreateNewBookingSeat
+	);
+	router.post(
 		"/api/get-booking-by-cinema-movie-screen-date-time",
 		bookingController.handleGetBookingByCinemaMovieScreenDateTime
 	);

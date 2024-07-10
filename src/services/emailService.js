@@ -3,6 +3,7 @@ import nodemailer from "nodemailer";
 import moment from "moment";
 
 let sendSimpleEmail = async (data) => {
+	let seatsSelected = data.seatsSelected;
 	let transporter = nodemailer.createTransport({
 		host: "smtp.gmail.com",
 		port: 587,
@@ -28,6 +29,7 @@ let sendSimpleEmail = async (data) => {
 		<div><b>Rạp:</b> ${data.cinemaName}</div>
 		<div><b>Phòng chiếu:</b> ${data.screenName}</div>
 		<div><b>Tổng số vé:</b> ${data.totalTickets}</div>
+		<div><b>Ghế đã chọn:</b> ${seatsSelected.join(", ")}</div>
 		<div><b>Tổng số tiền:</b> ${data.totalPrice}đ</div>
 		<div><b>Thời gian đặt vé :</b> ${moment(data.bookingDate, "HH:mm").format(
 			"hh:mm A - DD/MM/YYYY"
