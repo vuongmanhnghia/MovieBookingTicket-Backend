@@ -254,7 +254,7 @@ let getAllMoviesSearch = (key) => {
 	return new Promise(async (resolve, reject) => {
 		try {
 			let movies = await db.Movie.findAll({
-				limit: 10,
+				limit: 5,
 				where: {
 					title: {
 						[db.Sequelize.Op.like]: `%${key}%`,
