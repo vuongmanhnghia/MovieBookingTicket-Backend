@@ -17,9 +17,15 @@ let handleCreateNewBookingSeat = async (req, res) => {
 	return res.status(200).json(message);
 };
 
+let handleGetBookingSeats = async (req, res) => {
+	let response = await bookingService.getBookingSeats(req.body);
+	return res.status(200).json(response);
+};
+
 module.exports = {
 	handleCreateNewBooking: handleCreateNewBooking,
 	handleGetBookingByCinemaMovieScreenDateTime:
 		handleGetBookingByCinemaMovieScreenDateTime,
 	handleCreateNewBookingSeat: handleCreateNewBookingSeat,
+	handleGetBookingSeats: handleGetBookingSeats,
 };

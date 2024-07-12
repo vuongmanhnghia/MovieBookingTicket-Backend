@@ -83,7 +83,7 @@ let getTopMovies = (limit) => {
 	return new Promise(async (resolve, reject) => {
 		try {
 			let movies = await db.Movie.findAll({
-				limit: limit,
+				limit: limit ? limit : 15,
 				order: [["createdAt", "DESC"]],
 				attributes: {
 					exclude: [
@@ -116,16 +116,15 @@ let getTopMovies = (limit) => {
 let getAllMovies = () => {
 	return new Promise(async (resolve, reject) => {
 		try {
-			let movies = await db.Movie.findAll({});
+			let movies = await db.Movie.findAll({
+				attributes: ["title", "image", "rating", "genre"],
+				order: [["createdAt", "DESC"]],
+			});
 
 			movies.map((item) => {
 				item.image = new Buffer.from(item.image, "base64").toString(
 					"binary"
 				);
-				item.background = new Buffer.from(
-					item.background,
-					"base64"
-				).toString("binary");
 			});
 			resolve({
 				errCode: 0,
@@ -185,7 +184,7 @@ let getMoviesPage = (page, limit) => {
 				offset: offset,
 				limit: limit,
 
-				order: [["createdAt", "DESC"]],
+				// order: [["createdAt", "DESC"]],
 				attributes: {
 					exclude: ["createdAt", "updatedAt", "background"],
 				},

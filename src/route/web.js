@@ -104,6 +104,10 @@ let initWebRoutes = (app) => {
 		"/api/get-booking-by-cinema-movie-screen-date-time",
 		bookingController.handleGetBookingByCinemaMovieScreenDateTime
 	);
+	router.post(
+		"/api/get-booking-seats",
+		bookingController.handleGetBookingSeats
+	);
 
 	return app.use("/", router);
 };

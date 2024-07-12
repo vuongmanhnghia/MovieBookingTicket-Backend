@@ -14,7 +14,7 @@ let sendSimpleEmail = async (data) => {
 		},
 	});
 
-	let info = await transporter.sendMail({
+	await transporter.sendMail({
 		from: '"Vuong Manh Nghia 👻" <vuongmanhnghia@gmail.com>',
 		to: data.reciverEmail,
 		subject: "Thông tin đặt vé xem phim ✔",
@@ -24,7 +24,7 @@ let sendSimpleEmail = async (data) => {
       <p>Chúc mừng bạn đã đặt vé thành công!</p>
 		<p>Thông tin vé của bạn:</p>
 		<div><b>Tên phim:</b> ${data.movieName}</div>
-		<div><b>Ngày chiếu:</b> ${moment(data.showDate).format("DD/MM/YYYY")}</div>
+		<div><b>Ngày chiếu:</b> ${data.showDate}</div>
 		<div><b>Giờ chiếu:</b> ${data.showTime}</div>
 		<div><b>Rạp:</b> ${data.cinemaName}</div>
 		<div><b>Phòng chiếu:</b> ${data.screenName}</div>

@@ -12,13 +12,13 @@ let createNewBooking = (data) => {
 					fullName: data.fullName,
 					phoneNumber: data.phoneNumber,
 					movieName: data.movieId,
-					showDate: new Date(data.date),
+					showDate: data.date,
 					showTime: data.time,
 					cinemaName: data.cinemaId,
 					screenName: data.screenId,
 					totalTickets: data.totalTickets,
 					totalPrice: data.totalPrice,
-					bookingDate: new Date(data.bookingDate),
+					bookingDate: data.bookingDate,
 					seatsSelected: data.seatsSelected,
 				});
 
@@ -99,8 +99,41 @@ let getBookingByCinemaMovieScreenDateTime = (data) => {
 	});
 };
 
+let getBookingSeats = (data) => {
+	return new Promise(async (resolve, reject) => {
+		try {
+			let dataBookingSeats = await db.BookingSeat.findAll({
+				where: {
+					cinema: data.cinema,
+					screen: data.screen,
+					date: data.date,
+					time: data.time,
+				},
+				attributes: ["seat", "numberSeat"],
+			});
+			let result = {};
+			let seat = dataBookingSeats.map((item) => {
+				return item.seat;
+			});
+			let numberSeat = dataBookingSeats.map((item) => {
+				return item.numberSeat;
+			});
+			result.seat = seat;
+			result.numberSeat = numberSeat;
+			resolve({
+				errCode: 0,
+				errMessage: "Get booking seats success!",
+				data: result,
+			});
+		} catch (e) {
+			reject(e);
+		}
+	});
+};
+
 module.exports = {
 	createNewBooking: createNewBooking,
 	getBookingByCinemaMovieScreenDateTime: getBookingByCinemaMovieScreenDateTime,
 	createNewBookingSeat: createNewBookingSeat,
+	getBookingSeats: getBookingSeats,
 };
