@@ -1,9 +1,4 @@
-import { raw } from "body-parser";
 import db from "../models/index";
-import { name } from "ejs";
-import { Model, where } from "sequelize";
-import { at, result } from "lodash";
-import e from "cors";
 require("dotenv").config();
 
 let createNewShowtime = (data) => {
@@ -162,6 +157,7 @@ let getShowtimeByCinemaAndDate = (data) => {
 				attributes: {
 					exclude: ["createdAt", "updatedAt", "id"],
 				},
+				order: [["startTime", "ASC"]],
 				raw: true,
 			});
 			if (dataShowtime.length === 0) {
@@ -233,6 +229,7 @@ let getShowtimeByCinemaAndDateAndMovie = (data) => {
 				attributes: {
 					exclude: ["createdAt", "updatedAt", "id"],
 				},
+				order: [["startTime", "ASC"]],
 				raw: true,
 			});
 			if (dataShowtime.length === 0) {
