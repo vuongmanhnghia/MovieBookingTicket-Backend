@@ -50,6 +50,7 @@ let getScreenDetail = (cinemaId) => {
 				attributes: {
 					exclude: ["createdAt", "updatedAt"],
 				},
+				order: [["name", "ASC"]],
 				raw: true,
 			});
 			resolve({
